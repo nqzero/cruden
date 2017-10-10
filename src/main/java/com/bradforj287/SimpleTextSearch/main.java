@@ -16,7 +16,7 @@ class main {
 
     public static void main(String args[]) throws Exception {
 
-        File fXmlFile = new File("/Users/brad/Downloads/gaming.stackexchange.com/Posts.xml");
+        File fXmlFile = new File("t1/Posts.xml");
 
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
