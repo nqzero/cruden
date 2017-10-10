@@ -61,7 +61,7 @@ public class SearchIndexFactory {
         return parsedDocuments;
     }
 
-    public static TextSearchIndex buildIndex(Collection<Document> documents) {
+    public static InvertedIndex buildIndex(Collection<Document> documents) {
 
         Collection<ParsedDocument> parsedDocuments = buildParsedDocumentsParrallel(documents);
 

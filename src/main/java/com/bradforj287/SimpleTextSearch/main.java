@@ -1,5 +1,6 @@
 package com.bradforj287.SimpleTextSearch;
 
+import com.bradforj287.SimpleTextSearch.engine.InvertedIndex;
 import com.google.common.base.Stopwatch;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -44,39 +45,18 @@ class main {
             idToBody.put(id, body);
         }
 
-        Stopwatch sw = Stopwatch.createUnstarted();
-        sw.start();
-        TextSearchIndex index = SearchIndexFactory.buildIndex(documentList);
-        sw.stop();
+        InvertedIndex index = SearchIndexFactory.buildIndex(documentList);
 
+        String searchTerm = "beer";
+        SearchResultBatch batch = index.search(searchTerm, 3);
 
-        System.out.println("finished building index took " + sw.toString());
-        System.out.println("num documents: " + index.numDocuments());
-        System.out.println("num terms: " + index.termCount());
-
-        Scanner scanner = new Scanner(System.in);
-
-        String searchTerm = "";
-        while (!searchTerm.equalsIgnoreCase("EXIT")) {
-            System.out.print("Enter your search terms or type EXIT: ");
-
-              searchTerm = scanner.nextLine();
-            sw.reset();
-            sw.start();
-            SearchResultBatch batch = index.search(searchTerm, 3);
-            sw.stop();
-
-            System.out.println("printing results for term: " + searchTerm);
-            for (SearchResult result : batch.getSearchResults()) {
-                System.out.println("----------\n\n");
-                System.out.println("score = " + result.getRelevanceScore());
-                System.out.println(idToBody.get(result.getUniqueIdentifier().toString()));
-            }
-
-            System.out.println("finished searching took: " + sw.toString());
-            System.out.println("num documents searched: " + batch.getStats().getDocumentsSearched());
-
+        System.out.println("printing results for term: " + searchTerm);
+        for (SearchResult result : batch.getSearchResults()) {
+            System.out.println(result.getUniqueIdentifier());
+            System.out.println(idToBody.get(result.getUniqueIdentifier().toString()));
         }
+
+        System.exit(0);
 
     }
 }

@@ -12,7 +12,7 @@ import java.util.concurrent.*;
 /**
  * Created by brad on 6/6/15.
  */
-public class InvertedIndex implements TextSearchIndex {
+public class InvertedIndex {
 
     private static int THREAD_POOL_SIZE = Math.max(1, Runtime.getRuntime().availableProcessors());
 
@@ -52,13 +52,7 @@ public class InvertedIndex implements TextSearchIndex {
         docToMetrics = ImmutableMap.copyOf(metricsMap);
     }
 
-    public int numDocuments() {
-        return corpus.size();
-    }
 
-    public int termCount() {
-        return termToPostings.keySet().size();
-    }
 
     private Set<ParsedDocument> getRelevantDocuments(ParsedDocument searchDoc) {
 
@@ -72,7 +66,6 @@ public class InvertedIndex implements TextSearchIndex {
         return retVal;
     }
 
-    @Override
     public SearchResultBatch search(String searchTerm, int maxResults) {
         Stopwatch stopwatch = Stopwatch.createStarted();
 
