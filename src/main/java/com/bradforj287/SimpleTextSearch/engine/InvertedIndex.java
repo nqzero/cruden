@@ -15,8 +15,8 @@ public class InvertedIndex {
         // build the reverse index, ie from word to list of documents
         for (int id=0; id < corpus.size(); id++) {
             String page = corpus.get(id);
-            ParsedDocument doc = parser.parse(page);
-            for (String word : doc.getUniqueWords()) {
+            ArrayList<String> doc = parser.parse(page);
+            for (String word : doc) {
                 if (!index.containsKey(word)) index.put(word, new ArrayList());
                 index.get(word).add(id);
             }
@@ -27,9 +27,9 @@ public class InvertedIndex {
 
 
     public ArrayList<ArrayList<Integer>> search(String searchTerm) {
-        ParsedDocument searchDoc = searchTermParser.parse(searchTerm);
+        ArrayList<String> search = searchTermParser.parse(searchTerm);
         ArrayList<ArrayList<Integer>> results = new ArrayList<>();
-        for (String word : searchDoc.getUniqueWords())
+        for (String word : search)
             if (index.containsKey(word))
                 results.add(index.get(word));
         return results;

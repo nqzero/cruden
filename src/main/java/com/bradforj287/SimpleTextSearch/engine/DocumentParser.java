@@ -25,10 +25,8 @@ public class DocumentParser {
         }
     }
 
-    public ParsedDocument parse(String txt) {
-        ArrayList<String> documentTerms = rawTextToTermList(txt);
-        ParsedDocument document = new ParsedDocument(documentTerms);
-        return document;
+    public ArrayList<String> parse(String txt) {
+        return rawTextToTermList(txt);
     }
 
     private ArrayList<String> rawTextToTermList(String rawText) {

@@ -1,7 +1,7 @@
 package bradforj287.SimpleTextSearch;
 
 import com.bradforj287.SimpleTextSearch.engine.DocumentParser;
-import com.bradforj287.SimpleTextSearch.engine.ParsedDocument;
+import java.util.ArrayList;
 import org.junit.Test;
 
 /**
@@ -25,10 +25,10 @@ public class DocumentParserTest {
 
         DocumentParser parser = new DocumentParser(true, true);
 
-        ParsedDocument pd = parser.parse(raw);
+        ArrayList<String> terms = parser.parse(raw);
 
         boolean foundPunctuation = false;
-        for (String term : pd.getUniqueWords()) {
+        for (String term : terms) {
             if (term.equals(";")) {
                 foundPunctuation = true;
                 break;
