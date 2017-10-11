@@ -53,6 +53,7 @@ class main {
         for (Set<ParsedDocument> set : batch){
             num += set.size();
             int count = 0;
+            if (false)
             for (ParsedDocument pd : set) {
                 Integer id = pd.getUniqueId();
                 System.out.println(id);
