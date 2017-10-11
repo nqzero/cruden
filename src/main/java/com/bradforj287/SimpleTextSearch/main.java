@@ -25,19 +25,12 @@ class main {
 
         doc.getDocumentElement().normalize();
 
-        System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
-
         NodeList nList = doc.getElementsByTagName("row");
-
         ArrayList<String> docs = new ArrayList<>();
 
-        for (int i = 0; i < nList.getLength(); i++) {
-
-            Node n = nList.item(i);
-
-            String body = n.getAttributes().getNamedItem("Body").getTextContent();
+        for (int ii = 0; ii < nList.getLength(); ii++) {
+            String body = nList.item(ii).getAttributes().getNamedItem("Body").getTextContent();
             String text = Jsoup.parse(body).text();
-
             docs.add(text);
         }
 

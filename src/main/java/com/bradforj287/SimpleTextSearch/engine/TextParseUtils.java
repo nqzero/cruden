@@ -3,6 +3,7 @@ package com.bradforj287.SimpleTextSearch.engine;
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.process.CoreLabelTokenFactory;
 import edu.stanford.nlp.process.PTBTokenizer;
+import edu.stanford.nlp.process.TokenizerFactory;
 import org.tartarus.snowball.ext.englishStemmer;
 
 import java.io.StringReader;
@@ -27,8 +28,8 @@ public class TextParseUtils {
     public static List<String> tokenize(String rawText) {
         List<String> retVal = new ArrayList<>();
 
-        PTBTokenizer<CoreLabel> ptbt = new PTBTokenizer<>(new StringReader(rawText),
-                new CoreLabelTokenFactory(), "");
+        PTBTokenizer<CoreLabel> ptbt =
+                new PTBTokenizer<>(new StringReader(rawText),new CoreLabelTokenFactory(), "untokenizable=noneDelete");
         while (ptbt.hasNext()) {
             CoreLabel label = ptbt.next();
             String str = label.toString();
