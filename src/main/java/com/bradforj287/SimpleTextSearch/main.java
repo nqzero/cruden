@@ -35,7 +35,7 @@ class main {
 
             Node n = nList.item(i);
 
-            String body = n.getAttributes().getNamedItem("Body").toString();
+            String body = n.getAttributes().getNamedItem("Body").getTextContent();
             String text = Jsoup.parse(body).text();
 
             docs.add(text);
