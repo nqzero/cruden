@@ -25,16 +25,16 @@ public class DocumentParser {
     }
 
     public ParsedDocument parse(String txt,Integer id) {
-        List<DocumentTerm> documentTerms = rawTextToTermList(txt);
+        List<String> documentTerms = rawTextToTermList(txt);
         ParsedDocument document = new ParsedDocument(documentTerms,id);
         return document;
     }
 
-    private List<DocumentTerm> rawTextToTermList(String rawText) {
+    private List<String> rawTextToTermList(String rawText) {
         String text = rawText;
 
         if (StringUtils.isEmpty(text)) {
-            return new ArrayList<DocumentTerm>();
+            return new ArrayList<>();
         }
 
         if (parseHtml) {
@@ -52,7 +52,7 @@ public class DocumentParser {
         // iterate over parsed terms
         List<String> terms = TextParseUtils.tokenize(text);
 
-        List<DocumentTerm> retVal = new ArrayList<>();
+        List<String> retVal = new ArrayList<>();
         int pos = 0;
         for (String str : terms) {
             String stemmedTerm = TextParseUtils.stemWord(str);
@@ -71,7 +71,7 @@ public class DocumentParser {
                 strToUse = stringPool.get(stemmedTerm);
             }
 
-            retVal.add(new DocumentTerm(strToUse, pos));
+            retVal.add(strToUse);
             pos++;
         }
 

@@ -11,10 +11,10 @@ public class ParsedDocument {
     private HashSet<String> uniqueWords = new HashSet<>();
     private Integer uniqueId;
 
-    public ParsedDocument(List<DocumentTerm> terms,Integer uniqueId) {
+    public ParsedDocument(List<String> terms,Integer uniqueId) {
         this.uniqueId = uniqueId;
-        for (DocumentTerm term : terms)
-            uniqueWords.add(term.getWord());
+        for (String term : terms)
+            uniqueWords.add(term);
     }
 
 
