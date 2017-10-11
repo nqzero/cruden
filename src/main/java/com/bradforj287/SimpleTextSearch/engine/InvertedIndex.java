@@ -35,8 +35,5 @@ public class InvertedIndex {
         return results;
     }
 
-    public static InvertedIndex buildIndex(ArrayList<String> docs) {
-        return new InvertedIndex(docs);
-    }
 
 }

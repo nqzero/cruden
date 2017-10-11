@@ -42,7 +42,7 @@ class main {
             idToBody.put(id, body);
         }
 
-        InvertedIndex index = InvertedIndex.buildIndex(documentList);
+        InvertedIndex index = new InvertedIndex(documentList);
 
         String searchTerm = "world";
         ArrayList<Set<Integer>> batch = index.search(searchTerm);
