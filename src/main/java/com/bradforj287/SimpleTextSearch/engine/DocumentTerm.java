@@ -23,9 +23,6 @@ public class DocumentTerm {
         return word;
     }
 
-    public int getPositionInDoc() {
-        return positionInDoc;
-    }
 
     @Override
     public boolean equals(Object o) {

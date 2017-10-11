@@ -16,8 +16,8 @@ public class InvertedIndex {
         // build term -> posting map
         Map<String,HashSet<ParsedDocument>> termToPostingsMap = new HashMap<>();
         for (ParsedDocument document : corpus) {
-            for (DocumentTerm documentTerm : document.getDocumentTerms()) {
-                final String word = documentTerm.getWord();
+            for (DocumentTerm term : document.getDocumentTerms()) {
+                final String word = term.getWord();
                 if (!termToPostingsMap.containsKey(word))
                     termToPostingsMap.put(word, new HashSet());
 

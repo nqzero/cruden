@@ -42,9 +42,6 @@ public class ParsedDocument {
 
 
 
-    public boolean isEmpty() {
-        return documentTerms == null || documentTerms.isEmpty();
-    }
 
     public List<DocumentTerm> getDocumentTerms() {
         return documentTerms;
