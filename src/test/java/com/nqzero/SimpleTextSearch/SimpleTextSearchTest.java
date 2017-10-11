@@ -1,6 +1,6 @@
-package bradforj287.SimpleTextSearch;
+package com.nqzero.SimpleTextSearch;
 
-import com.bradforj287.SimpleTextSearch.engine.InvertedIndex;
+import com.nqzero.SimpleTextSearch.InvertedIndex;
 import org.junit.*;
 
 import java.util.ArrayList;

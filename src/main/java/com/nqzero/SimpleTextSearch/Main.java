@@ -1,6 +1,5 @@
-package com.bradforj287.SimpleTextSearch;
+package com.nqzero.SimpleTextSearch;
 
-import com.bradforj287.SimpleTextSearch.engine.InvertedIndex;
 import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;

@@ -1,4 +1,4 @@
-package com.bradforj287.SimpleTextSearch.engine;
+package com.nqzero.SimpleTextSearch;
 
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.process.CoreLabelTokenFactory;
