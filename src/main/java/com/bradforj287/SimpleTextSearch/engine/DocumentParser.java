@@ -1,6 +1,5 @@
 package com.bradforj287.SimpleTextSearch.engine;
 
-import com.bradforj287.SimpleTextSearch.Document;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 
@@ -25,10 +24,10 @@ public class DocumentParser {
         }
     }
 
-    public ParsedDocument parseDocument(Document doc) {
-        List<DocumentTerm> documentTerms = rawTextToTermList(doc.getRawText());
+    public ParsedDocument parseDocument(String txt,Object id) {
+        List<DocumentTerm> documentTerms = rawTextToTermList(txt);
 
-        ParsedDocument document = new ParsedDocument(documentTerms, doc.getUniqueIdentifier());
+        ParsedDocument document = new ParsedDocument(documentTerms,id);
         return document;
     }
 

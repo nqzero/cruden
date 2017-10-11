@@ -54,8 +54,9 @@ class main {
         for (Set<ParsedDocument> set : batch){
             int count = 0;
             for (ParsedDocument pd : set) {
-                System.out.println(pd.getUniqueId());
-                System.out.println(idToBody.get(pd.getUniqueId()));
+                Object id = pd.getUniqueId();
+                System.out.println(id);
+                System.out.println(idToBody.get(id));
                 System.out.println("------------------------------------------------------");
                 if (++count==4) break;
             }
@@ -70,7 +71,7 @@ class main {
 
         ArrayList<ParsedDocument> corpus = new ArrayList<>();
         for (Document doc : documents)
-            corpus.add(parser.parseDocument(doc));
+            corpus.add(parser.parseDocument(doc.getRawText(),doc.getUniqueIdentifier()));
         
         InvertedIndex invertedIndex = new InvertedIndex(corpus);
 
