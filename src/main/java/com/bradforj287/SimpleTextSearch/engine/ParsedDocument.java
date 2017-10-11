@@ -2,7 +2,6 @@ package com.bradforj287.SimpleTextSearch.engine;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 
 import java.util.HashMap;
@@ -16,7 +15,6 @@ import java.util.Set;
 public class ParsedDocument {
 
     private ImmutableList<DocumentTerm> documentTerms;
-    private ImmutableMap<String, Integer> wordFrequencyMap;
     private ImmutableSet<String> uniqueWords;
     private Object uniqueId;
 
@@ -39,18 +37,10 @@ public class ParsedDocument {
             wordFrequency.put(word, count + 1);
         }
 
-        wordFrequencyMap = ImmutableMap.copyOf(wordFrequency);
         uniqueWords = ImmutableSet.copyOf(getUniqueWordsHashSet());
     }
 
 
-    public int getWordFrequency(String word) {
-        if (!wordFrequencyMap.containsKey(word)) {
-            return 0;
-        }
-
-        return wordFrequencyMap.get(word);
-    }
 
     public boolean isEmpty() {
         return documentTerms == null || documentTerms.isEmpty();
