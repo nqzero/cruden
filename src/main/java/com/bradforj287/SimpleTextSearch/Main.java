@@ -1,7 +1,6 @@
 package com.bradforj287.SimpleTextSearch;
 
 import com.bradforj287.SimpleTextSearch.engine.InvertedIndex;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -13,7 +12,7 @@ import org.jsoup.Jsoup;
 /**
  * Created by brad on 6/10/15.
  */
-class main {
+class Main {
 
     public static void main(String args[]) throws Exception {
 
