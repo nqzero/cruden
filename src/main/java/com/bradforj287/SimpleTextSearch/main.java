@@ -30,15 +30,15 @@ class main {
 
         NodeList nList = doc.getElementsByTagName("row");
 
-        List<Document> documentList = new ArrayList<>();
-        Map<String, String> idToBody = new HashMap<>();
+        ArrayList<Document> documentList = new ArrayList<>();
+        Map<Integer, String> idToBody = new HashMap<>();
 
         for (int i = 0; i < nList.getLength(); i++) {
 
             Node n = nList.item(i);
 
             String body = n.getAttributes().getNamedItem("Body").toString();
-            String id = n.getAttributes().getNamedItem("Id").toString();
+            Integer id = i;
 
             Document document = new Document(body, id);
             documentList.add(document);
@@ -65,7 +65,7 @@ class main {
         System.exit(0);
 
     }
-    public static InvertedIndex buildIndex(Collection<Document> documents) {
+    public static InvertedIndex buildIndex(ArrayList<Document> documents) {
 
         DocumentParser parser = new DocumentParser(true,true);
 
