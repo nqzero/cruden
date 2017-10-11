@@ -1,6 +1,5 @@
 package com.bradforj287.SimpleTextSearch.engine;
 
-import com.google.common.collect.ImmutableMap;
 
 import java.util.*;
 
@@ -8,7 +7,7 @@ import java.util.*;
  * Created by brad on 6/6/15.
  */
 public class InvertedIndex {
-    private HashMap<String,HashSet<ParsedDocument>> index = new HashMap<>();
+    private HashMap<String,HashSet<Integer>> index = new HashMap<>();
     private DocumentParser searchTermParser = new DocumentParser(false, false);
 
     public InvertedIndex(List<ParsedDocument> corpus) {
@@ -16,7 +15,7 @@ public class InvertedIndex {
         for (ParsedDocument doc : corpus) {
             for (String word : doc.getUniqueWords()) {
                 if (!index.containsKey(word)) index.put(word, new HashSet());
-                index.get(word).add(doc);
+                index.get(word).add(doc.getUniqueId());
             }
         }
     }
@@ -24,13 +23,13 @@ public class InvertedIndex {
 
 
 
-    public ArrayList<Set<ParsedDocument>> search(String searchTerm) {
+    public ArrayList<Set<Integer>> search(String searchTerm) {
         ParsedDocument searchDoc = searchTermParser.parse(searchTerm,0);
-        ArrayList<Set<ParsedDocument>> docs = new ArrayList<>();
+        ArrayList<Set<Integer>> results = new ArrayList<>();
         for (String word : searchDoc.getUniqueWords())
             if (index.containsKey(word))
-                docs.add(index.get(word));
-        return docs;
+                results.add(index.get(word));
+        return results;
     }
 
     public static InvertedIndex buildIndex(ArrayList<String> docs) {

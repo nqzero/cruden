@@ -46,15 +46,14 @@ class main {
         InvertedIndex index = InvertedIndex.buildIndex(documentList);
 
         String searchTerm = "world";
-        ArrayList<Set<ParsedDocument>> batch = index.search(searchTerm);
+        ArrayList<Set<Integer>> batch = index.search(searchTerm);
 
         int num = 0;
-        for (Set<ParsedDocument> set : batch){
+        for (Set<Integer> set : batch){
             num += set.size();
             int count = 0;
-            if (false)
-            for (ParsedDocument pd : set) {
-                Integer id = pd.getUniqueId();
+//            if (false)
+            for (Integer id : set) {
                 System.out.println(id);
                 System.out.println(documentList.get(id));
                 System.out.println("------------------------------------------------------");
