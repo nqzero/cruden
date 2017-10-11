@@ -1,7 +1,6 @@
 package com.bradforj287.SimpleTextSearch.engine;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 
 import java.util.HashMap;
@@ -13,15 +12,12 @@ import java.util.Set;
  * Created by brad on 6/6/15.
  */
 public class ParsedDocument {
-
-    private ImmutableList<DocumentTerm> documentTerms;
     private ImmutableSet<String> uniqueWords;
     private Integer uniqueId;
 
     public ParsedDocument(List<DocumentTerm> documentTerms,Integer uniqueId) {
         Preconditions.checkNotNull(uniqueId);
         Preconditions.checkNotNull(documentTerms);
-        this.documentTerms = ImmutableList.copyOf(documentTerms);
         this.uniqueId = uniqueId;
         HashMap<String, Integer> wordFrequency = new HashMap<>();
         uniqueWords = null;
@@ -37,24 +33,21 @@ public class ParsedDocument {
             wordFrequency.put(word, count + 1);
         }
 
-        uniqueWords = ImmutableSet.copyOf(getUniqueWordsHashSet());
+        uniqueWords = ImmutableSet.copyOf(getUniqueWordsHashSet(documentTerms));
     }
 
 
 
 
-    public List<DocumentTerm> getDocumentTerms() {
-        return documentTerms;
-    }
 
     public Set<String> getUniqueWords() {
         return uniqueWords;
     }
 
-    private HashSet<String> getUniqueWordsHashSet() {
+    private HashSet<String> getUniqueWordsHashSet(List<DocumentTerm> terms) {
 
         HashSet<String> w = new HashSet<>();
-        for (DocumentTerm t : documentTerms) {
+        for (DocumentTerm t : terms) {
             w.add(t.getWord());
         }
         return w;

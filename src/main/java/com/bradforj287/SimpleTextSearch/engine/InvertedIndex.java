@@ -14,17 +14,14 @@ public class InvertedIndex {
 
     public InvertedIndex(List<ParsedDocument> corpus) {
         // build term -> posting map
-        Map<String,HashSet<ParsedDocument>> termToPostingsMap = new HashMap<>();
-        for (ParsedDocument document : corpus) {
-            for (DocumentTerm term : document.getDocumentTerms()) {
-                final String word = term.getWord();
-                if (!termToPostingsMap.containsKey(word))
-                    termToPostingsMap.put(word, new HashSet());
-
-                termToPostingsMap.get(word).add(document);
+        Map<String,HashSet<ParsedDocument>> map = new HashMap<>();
+        for (ParsedDocument doc : corpus) {
+            for (String word : doc.getUniqueWords()) {
+                if (!map.containsKey(word)) map.put(word, new HashSet());
+                map.get(word).add(doc);
             }
         }
-        termToPostings = ImmutableMap.copyOf(termToPostingsMap);
+        termToPostings = ImmutableMap.copyOf(map);
     }
 
 
