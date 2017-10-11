@@ -20,14 +20,20 @@ public class InvertedIndex {
             }
         }
     }
+    
+    public ArrayList<Integer> join(ArrayList<Integer> ... list) {
+        // fixme - actually join
+        return list[0];
+    }
 
-    public ArrayList<ArrayList<Integer>> search(String searchTerm) {
+    public ArrayList<Integer> search(String searchTerm) {
         ArrayList<String> search = parse(searchTerm);
-        ArrayList<ArrayList<Integer>> results = new ArrayList<>();
-        for (String word : search)
-            if (index.containsKey(word))
-                results.add(index.get(word));
-        return results;
+        ArrayList<Integer> [] data = new ArrayList[search.size()];
+
+        for (int ii=0; ii < search.size(); ii++)
+            data[ii] = index.get(search.get(ii));
+
+        return join(data);
     }
 
     public static ArrayList<String> parse(String text) {

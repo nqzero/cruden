@@ -44,20 +44,17 @@ class main {
         InvertedIndex index = new InvertedIndex(docs);
 
         String searchTerm = "world";
-        ArrayList<ArrayList<Integer>> batch = index.search(searchTerm);
+        ArrayList<Integer> batch = index.search(searchTerm);
 
-        int num = 0;
-        for (ArrayList<Integer> set : batch){
-            num += set.size();
-            int count = 0;
-            if (false)
-            for (Integer id : set) {
+        int num = batch.size();
+        int count = 0;
+        if (false)
+            for (Integer id : batch) {
+                if (count++ >= 4) break;
                 System.out.println(id);
                 System.out.println(docs.get(id));
                 System.out.println("------------------------------------------------------");
-                if (++count==4) break;
             }
-        }
         System.out.println("number of hits: " + num);
 
         System.exit(0);
