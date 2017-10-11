@@ -23,7 +23,7 @@ public class DocumentParserTest {
                 "<p>Am I correct, and which countries' flags are the second and fourth?</p>\n" +
                 "\"";
 
-        DocumentParser parser = new DocumentParser(true, true);
+        DocumentParser parser = new DocumentParser(true);
 
         ArrayList<String> terms = parser.parse(raw);
 

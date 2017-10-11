@@ -8,6 +8,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 import java.util.*;
+import org.jsoup.Jsoup;
 
 /**
  * Created by brad on 6/10/15.
@@ -29,17 +30,15 @@ class main {
         NodeList nList = doc.getElementsByTagName("row");
 
         ArrayList<String> docs = new ArrayList<>();
-        Map<Integer, String> idToBody = new HashMap<>();
 
         for (int i = 0; i < nList.getLength(); i++) {
 
             Node n = nList.item(i);
 
             String body = n.getAttributes().getNamedItem("Body").toString();
-            Integer id = i;
+            String text = Jsoup.parse(body).text();
 
-            docs.add(body);
-            idToBody.put(id, body);
+            docs.add(text);
         }
 
         InvertedIndex index = new InvertedIndex(docs);

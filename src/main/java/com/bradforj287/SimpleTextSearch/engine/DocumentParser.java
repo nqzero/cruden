@@ -15,11 +15,9 @@ public class DocumentParser {
 
     private ConcurrentHashMap<String, String> stringPool;
     private boolean useStringPool;
-    private boolean parseHtml;
 
-    public DocumentParser(boolean useStringPool, boolean parseHtml) {
+    public DocumentParser(boolean useStringPool) {
         this.useStringPool = useStringPool;
-        this.parseHtml = parseHtml;
         if (useStringPool) {
             stringPool = new ConcurrentHashMap<>();
         }
@@ -36,10 +34,6 @@ public class DocumentParser {
             return new ArrayList<>();
         }
 
-        if (parseHtml) {
-            // strip HTML
-            text = Jsoup.parse(text).text();
-        }
 
         if (text == null) {
             text = "";
