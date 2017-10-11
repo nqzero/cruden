@@ -1,8 +1,5 @@
 package com.bradforj287.SimpleTextSearch.engine;
 
-import com.google.common.base.Preconditions;
-
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -15,8 +12,6 @@ public class ParsedDocument {
     private Integer uniqueId;
 
     public ParsedDocument(List<DocumentTerm> terms,Integer uniqueId) {
-        Preconditions.checkNotNull(uniqueId);
-        Preconditions.checkNotNull(terms);
         this.uniqueId = uniqueId;
         for (DocumentTerm term : terms)
             uniqueWords.add(term.getWord());
