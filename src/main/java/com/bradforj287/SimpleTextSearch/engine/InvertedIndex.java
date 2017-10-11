@@ -34,7 +34,7 @@ public class InvertedIndex {
         return retVal;
     }
 
-    public ArrayList<Set<ParsedDocument>> search(String searchTerm, int maxResults) {
+    public ArrayList<Set<ParsedDocument>> search(String searchTerm) {
         ParsedDocument searchDocument = searchTermParser.parse(searchTerm,0);
         ArrayList<Set<ParsedDocument>> documentsToScanSet = getRelevantDocuments(searchDocument);
         return documentsToScanSet;

@@ -11,25 +11,15 @@ import java.util.Set;
  * Created by brad on 6/6/15.
  */
 public class ParsedDocument {
-    private HashSet<String> uniqueWords;
+    private HashSet<String> uniqueWords = new HashSet<>();
     private Integer uniqueId;
 
-    public ParsedDocument(List<DocumentTerm> documentTerms,Integer uniqueId) {
+    public ParsedDocument(List<DocumentTerm> terms,Integer uniqueId) {
         Preconditions.checkNotNull(uniqueId);
-        Preconditions.checkNotNull(documentTerms);
+        Preconditions.checkNotNull(terms);
         this.uniqueId = uniqueId;
-        HashMap<String, Integer> wordFrequency = new HashMap<>();
-
-        for (DocumentTerm t : documentTerms) {
-            String word = t.getWord();
-            if (!wordFrequency.containsKey(word))
-                wordFrequency.put(word, 0);
-
-            int count = wordFrequency.get(word);
-            wordFrequency.put(word, count + 1);
-        }
-
-        uniqueWords = getUniqueWordsHashSet(documentTerms);
+        for (DocumentTerm term : terms)
+            uniqueWords.add(term.getWord());
     }
 
 
@@ -38,15 +28,6 @@ public class ParsedDocument {
 
     public Set<String> getUniqueWords() {
         return uniqueWords;
-    }
-
-    private HashSet<String> getUniqueWordsHashSet(List<DocumentTerm> terms) {
-
-        HashSet<String> w = new HashSet<>();
-        for (DocumentTerm t : terms) {
-            w.add(t.getWord());
-        }
-        return w;
     }
 
     public Integer getUniqueId() {

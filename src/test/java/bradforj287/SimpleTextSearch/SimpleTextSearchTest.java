@@ -89,7 +89,7 @@ public class SimpleTextSearchTest {
 
         String searchTerm = "Mad in pursuit and in possession so";
 
-        ArrayList<Set<ParsedDocument>> batch = index.search(searchTerm, Integer.MAX_VALUE);
+        ArrayList<Set<ParsedDocument>> batch = index.search(searchTerm);
         ArrayList<ParsedDocument> results = new ArrayList<>();
 
         

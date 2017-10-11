@@ -47,18 +47,21 @@ class main {
         InvertedIndex index = InvertedIndex.buildIndex(documentList);
 
         String searchTerm = "world";
-        ArrayList<Set<ParsedDocument>> batch = index.search(searchTerm, 3);
+        ArrayList<Set<ParsedDocument>> batch = index.search(searchTerm);
 
+        int num = 0;
         for (Set<ParsedDocument> set : batch){
+            num += set.size();
             int count = 0;
             for (ParsedDocument pd : set) {
-                Integer id = (Integer) pd.getUniqueId();
+                Integer id = pd.getUniqueId();
                 System.out.println(id);
                 System.out.println(documentList.get(id));
                 System.out.println("------------------------------------------------------");
                 if (++count==4) break;
             }
-        }        
+        }
+        System.out.println("number of hits: " + num);
 
         System.exit(0);
 
