@@ -24,25 +24,4 @@ public class DocumentTerm {
     }
 
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-
-        if (o == null || getClass() != o.getClass()) return false;
-
-        DocumentTerm documentTerm = (DocumentTerm) o;
-
-        return new EqualsBuilder()
-                .append(positionInDoc, documentTerm.positionInDoc)
-                .append(word, documentTerm.word)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-                .append(word)
-                .append(positionInDoc)
-                .toHashCode();
-    }
 }
