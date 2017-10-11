@@ -1,6 +1,7 @@
 package com.bradforj287.SimpleTextSearch;
 
 import com.bradforj287.SimpleTextSearch.engine.InvertedIndex;
+import com.bradforj287.SimpleTextSearch.engine.ParsedDocument;
 import com.google.common.base.Stopwatch;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -47,14 +48,18 @@ class main {
 
         InvertedIndex index = SearchIndexFactory.buildIndex(documentList);
 
-        String searchTerm = "beer";
-        SearchResultBatch batch = index.search(searchTerm, 3);
+        String searchTerm = "world";
+        ArrayList<Set<ParsedDocument>> batch = index.search(searchTerm, 3);
 
-        System.out.println("printing results for term: " + searchTerm);
-        for (SearchResult result : batch.getSearchResults()) {
-            System.out.println(result.getUniqueIdentifier());
-            System.out.println(idToBody.get(result.getUniqueIdentifier().toString()));
-        }
+        for (Set<ParsedDocument> set : batch){
+            int count = 0;
+            for (ParsedDocument pd : set) {
+                System.out.println(pd.getUniqueId());
+                System.out.println(idToBody.get(pd.getUniqueId()));
+                System.out.println("------------------------------------------------------");
+                if (++count==4) break;
+            }
+        }        
 
         System.exit(0);
 

@@ -1,6 +1,5 @@
 package com.bradforj287.SimpleTextSearch.engine;
 
-import com.bradforj287.SimpleTextSearch.SearchResult;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,7 +23,7 @@ public class StopWordHelper {
 
         HashSet<String> retVal = new HashSet<>();
         //Get file from resources folder
-        ClassLoader classLoader = SearchResult.class.getClassLoader();
+        ClassLoader classLoader = StopWordHelper.class.getClassLoader();
 
         File file = new File(classLoader.getResource("stopwords/en.txt").getFile());
 
