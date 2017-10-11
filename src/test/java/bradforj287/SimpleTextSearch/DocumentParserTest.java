@@ -25,7 +25,7 @@ public class DocumentParserTest {
 
         DocumentParser parser = new DocumentParser(true, true);
 
-        ParsedDocument pd = parser.parse(raw,1);
+        ParsedDocument pd = parser.parse(raw);
 
         boolean foundPunctuation = false;
         for (String term : pd.getUniqueWords()) {

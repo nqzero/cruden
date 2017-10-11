@@ -9,10 +9,8 @@ import java.util.Set;
  */
 public class ParsedDocument {
     private HashSet<String> uniqueWords = new HashSet<>();
-    private Integer uniqueId;
 
-    public ParsedDocument(List<String> terms,Integer uniqueId) {
-        this.uniqueId = uniqueId;
+    public ParsedDocument(List<String> terms) {
         for (String term : terms)
             uniqueWords.add(term);
     }
@@ -25,7 +23,4 @@ public class ParsedDocument {
         return uniqueWords;
     }
 
-    public Integer getUniqueId() {
-        return uniqueId;
-    }
 }

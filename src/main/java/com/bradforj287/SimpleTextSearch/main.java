@@ -51,7 +51,7 @@ class main {
         for (Set<Integer> set : batch){
             num += set.size();
             int count = 0;
-//            if (false)
+            if (false)
             for (Integer id : set) {
                 System.out.println(id);
                 System.out.println(documentList.get(id));

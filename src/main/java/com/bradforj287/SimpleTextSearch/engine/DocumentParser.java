@@ -24,9 +24,9 @@ public class DocumentParser {
         }
     }
 
-    public ParsedDocument parse(String txt,Integer id) {
+    public ParsedDocument parse(String txt) {
         List<String> documentTerms = rawTextToTermList(txt);
-        ParsedDocument document = new ParsedDocument(documentTerms,id);
+        ParsedDocument document = new ParsedDocument(documentTerms);
         return document;
     }
 

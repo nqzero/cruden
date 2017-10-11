@@ -1,12 +1,9 @@
 package bradforj287.SimpleTextSearch;
 
-import com.bradforj287.SimpleTextSearch.*;
 import com.bradforj287.SimpleTextSearch.engine.InvertedIndex;
-import com.bradforj287.SimpleTextSearch.engine.ParsedDocument;
 import org.junit.*;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -90,15 +87,14 @@ public class SimpleTextSearchTest {
         String searchTerm = "Mad in pursuit and in possession so";
 
         ArrayList<Set<Integer>> batch = index.search(searchTerm);
-        ArrayList<ParsedDocument> results = new ArrayList<>();
 
-        
+        int id = batch.get(0).iterator().next();
         // verify correct top result
-        assert(results.get(0).getUniqueId().equals(4));
+        assert(id==4);
 
 
-        for (ParsedDocument result : results) {
-            System.out.println(result.getUniqueId() + " " + result.getUniqueId());
+        for (Integer result : batch.get(0)) {
+            System.out.println(result);
         }
     }
 }
