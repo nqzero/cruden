@@ -1,6 +1,6 @@
 package bradforj287.SimpleTextSearch;
 
-import com.bradforj287.SimpleTextSearch.engine.DocumentParser;
+import com.bradforj287.SimpleTextSearch.engine.InvertedIndex;
 import java.util.ArrayList;
 import org.junit.Test;
 
@@ -23,9 +23,7 @@ public class DocumentParserTest {
                 "<p>Am I correct, and which countries' flags are the second and fourth?</p>\n" +
                 "\"";
 
-        DocumentParser parser = new DocumentParser(true);
-
-        ArrayList<String> terms = parser.parse(raw);
+        ArrayList<String> terms = InvertedIndex.parse(raw);
 
         boolean foundPunctuation = false;
         for (String term : terms) {
