@@ -10,12 +10,15 @@ public class InvertedIndex {
     private HashMap<String,HashSet<Integer>> index = new HashMap<>();
     private DocumentParser searchTermParser = new DocumentParser(false, false);
 
-    public InvertedIndex(List<ParsedDocument> corpus) {
+    public InvertedIndex(List<String> corpus) {
+        DocumentParser parser = new DocumentParser(true,true);
         // build the reverse index, ie from word to list of documents
-        for (ParsedDocument doc : corpus) {
+        for (int id=0; id < corpus.size(); id++) {
+            String page = corpus.get(id);
+            ParsedDocument doc = parser.parse(page,id);
             for (String word : doc.getUniqueWords()) {
                 if (!index.containsKey(word)) index.put(word, new HashSet());
-                index.get(word).add(doc.getUniqueId());
+                index.get(word).add(id);
             }
         }
     }
@@ -33,13 +36,7 @@ public class InvertedIndex {
     }
 
     public static InvertedIndex buildIndex(ArrayList<String> docs) {
-        DocumentParser parser = new DocumentParser(true,true);
-
-        ArrayList<ParsedDocument> corpus = new ArrayList<>();
-        for (int ii=0; ii < docs.size(); ii++)
-            corpus.add(parser.parse(docs.get(ii),ii));
-        
-        return new InvertedIndex(corpus);
+        return new InvertedIndex(docs);
     }
 
 }

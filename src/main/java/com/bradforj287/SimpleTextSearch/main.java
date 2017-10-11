@@ -1,7 +1,6 @@
 package com.bradforj287.SimpleTextSearch;
 
 import com.bradforj287.SimpleTextSearch.engine.InvertedIndex;
-import com.bradforj287.SimpleTextSearch.engine.ParsedDocument;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
