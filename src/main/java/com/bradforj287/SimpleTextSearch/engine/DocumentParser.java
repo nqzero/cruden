@@ -26,12 +26,12 @@ public class DocumentParser {
     }
 
     public ParsedDocument parse(String txt) {
-        List<String> documentTerms = rawTextToTermList(txt);
+        ArrayList<String> documentTerms = rawTextToTermList(txt);
         ParsedDocument document = new ParsedDocument(documentTerms);
         return document;
     }
 
-    private List<String> rawTextToTermList(String rawText) {
+    private ArrayList<String> rawTextToTermList(String rawText) {
         String text = rawText;
 
         if (StringUtils.isEmpty(text)) {
@@ -53,7 +53,7 @@ public class DocumentParser {
         // iterate over parsed terms
         List<String> terms = TextParseUtils.tokenize(text);
 
-        List<String> retVal = new ArrayList<>();
+        ArrayList<String> retVal = new ArrayList<>();
         HashSet<String> set = new HashSet();
         for (String str : terms) {
             String stemmedTerm = TextParseUtils.stemWord(str);

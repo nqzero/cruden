@@ -1,25 +1,22 @@
 package com.bradforj287.SimpleTextSearch.engine;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.ArrayList;
 
 /**
  * Created by brad on 6/6/15.
  */
 public class ParsedDocument {
-    private HashSet<String> uniqueWords = new HashSet<>();
+    private ArrayList<String> uniqueWords = new ArrayList();
 
-    public ParsedDocument(List<String> terms) {
-        for (String term : terms)
-            uniqueWords.add(term);
+    public ParsedDocument(ArrayList<String> terms) {
+        uniqueWords = terms;
     }
 
 
 
 
 
-    public Set<String> getUniqueWords() {
+    public ArrayList<String> getUniqueWords() {
         return uniqueWords;
     }
 
