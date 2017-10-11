@@ -86,15 +86,16 @@ public class SimpleTextSearchTest {
 
         String searchTerm = "Mad in pursuit and in possession so";
 
-        ArrayList<Set<Integer>> batch = index.search(searchTerm);
+        ArrayList<ArrayList<Integer>> batch = index.search(searchTerm);
 
-        int id = batch.get(0).iterator().next();
-        // verify correct top result
-        assert(id==4);
+        int id = batch.get(0).get(0);
 
 
         for (Integer result : batch.get(0)) {
             System.out.println(result);
         }
+
+        // verify correct top result
+        assert(id==3);
     }
 }

@@ -28,7 +28,7 @@ class main {
 
         NodeList nList = doc.getElementsByTagName("row");
 
-        ArrayList<String> documentList = new ArrayList<>();
+        ArrayList<String> docs = new ArrayList<>();
         Map<Integer, String> idToBody = new HashMap<>();
 
         for (int i = 0; i < nList.getLength(); i++) {
@@ -38,23 +38,23 @@ class main {
             String body = n.getAttributes().getNamedItem("Body").toString();
             Integer id = i;
 
-            documentList.add(body);
+            docs.add(body);
             idToBody.put(id, body);
         }
 
-        InvertedIndex index = new InvertedIndex(documentList);
+        InvertedIndex index = new InvertedIndex(docs);
 
         String searchTerm = "world";
-        ArrayList<Set<Integer>> batch = index.search(searchTerm);
+        ArrayList<ArrayList<Integer>> batch = index.search(searchTerm);
 
         int num = 0;
-        for (Set<Integer> set : batch){
+        for (ArrayList<Integer> set : batch){
             num += set.size();
             int count = 0;
             if (false)
             for (Integer id : set) {
                 System.out.println(id);
-                System.out.println(documentList.get(id));
+                System.out.println(docs.get(id));
                 System.out.println("------------------------------------------------------");
                 if (++count==4) break;
             }
