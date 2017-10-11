@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -53,7 +54,7 @@ public class DocumentParser {
         List<String> terms = TextParseUtils.tokenize(text);
 
         List<String> retVal = new ArrayList<>();
-        int pos = 0;
+        HashSet<String> set = new HashSet();
         for (String str : terms) {
             String stemmedTerm = TextParseUtils.stemWord(str);
 
@@ -71,8 +72,8 @@ public class DocumentParser {
                 strToUse = stringPool.get(stemmedTerm);
             }
 
-            retVal.add(strToUse);
-            pos++;
+            if (set.add(strToUse))
+                retVal.add(strToUse);
         }
 
         return retVal;
