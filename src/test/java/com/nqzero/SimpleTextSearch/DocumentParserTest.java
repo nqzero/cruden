@@ -1,6 +1,5 @@
 package com.nqzero.SimpleTextSearch;
 
-import com.nqzero.SimpleTextSearch.InvertedIndex;
 import java.util.ArrayList;
 import org.junit.Test;
 

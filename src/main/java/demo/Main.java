@@ -1,5 +1,6 @@
-package com.nqzero.SimpleTextSearch;
+package demo;
 
+import com.nqzero.SimpleTextSearch.InvertedIndex;
 import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -12,8 +13,14 @@ import org.jsoup.Jsoup;
  * Created by brad on 6/10/15.
  */
 class Main {
+    ArrayList<String> docs = new ArrayList<>();
 
     public static void main(String args[]) throws Exception {
+        new Main().process();
+        System.exit(0);
+    }
+    
+    public void process() throws Exception {
 
         File fXmlFile = new File("t1/Posts.xml");
 
@@ -24,7 +31,6 @@ class Main {
         doc.getDocumentElement().normalize();
 
         NodeList nList = doc.getElementsByTagName("row");
-        ArrayList<String> docs = new ArrayList<>();
 
         for (int ii = 0; ii < nList.getLength(); ii++) {
             String body = nList.item(ii).getAttributes().getNamedItem("Body").getTextContent();
@@ -48,7 +54,6 @@ class Main {
             }
         System.out.println("number of hits: " + num);
 
-        System.exit(0);
 
     }
 }
