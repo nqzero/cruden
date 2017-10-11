@@ -42,14 +42,14 @@ public class InvertedIndex {
 
         List<String> terms = TextParseUtils.tokenize(text);
 
-        ArrayList<String> retVal = new ArrayList<>();
-        HashSet<String> set = new HashSet();
+        ArrayList<String> unique = new ArrayList<>();
+        HashSet<String> unseen = new HashSet();
         for (String str : terms) {
             String stem = TextParseUtils.stemWord(str);
-            if (! StopWordHelper.isStopWord(stem) && set.add(stem))
-                retVal.add(stem);
+            if (! StopWordHelper.isStopWord(stem) && unseen.add(stem))
+                unique.add(stem);
         }
 
-        return retVal;
+        return unique;
     }
 }
