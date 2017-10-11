@@ -1,10 +1,13 @@
 package bradforj287.SimpleTextSearch;
 
 import com.bradforj287.SimpleTextSearch.*;
+import com.bradforj287.SimpleTextSearch.engine.InvertedIndex;
+import com.bradforj287.SimpleTextSearch.engine.ParsedDocument;
 import org.junit.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by brad on 6/7/15.
@@ -76,35 +79,26 @@ public class SimpleTextSearchTest {
                 "All this the world well knows; yet none knows well\n" +
                 "To shun the heaven that leads men to this hell.";
 
-        List<Document> documents = new ArrayList<>();
-        documents.add(new Document(doc1, new Integer(1)));
-        documents.add(new Document(doc2, new Integer(2)));
-        documents.add(new Document(doc3, new Integer(3)));
-        documents.add(new Document(doc4, new Integer(4)));
+        ArrayList<String> documents = new ArrayList<>();
+        documents.add(doc1);
+        documents.add(doc2);
+        documents.add(doc3);
+        documents.add(doc4);
 
-        TextSearchIndex index = SearchIndexFactory.buildIndex(documents);
+        InvertedIndex index = InvertedIndex.buildIndex(documents);
 
         String searchTerm = "Mad in pursuit and in possession so";
 
-        SearchResultBatch batch = index.search(searchTerm, Integer.MAX_VALUE);
-        List<SearchResult> results = batch.getSearchResults();
+        ArrayList<Set<ParsedDocument>> batch = index.search(searchTerm, Integer.MAX_VALUE);
+        ArrayList<ParsedDocument> results = new ArrayList<>();
 
+        
         // verify correct top result
-        assert(results.get(0).getUniqueIdentifier().equals(4));
+        assert(results.get(0).getUniqueId().equals(4));
 
-        boolean outOfOrder = false;
-        for (int i = 0; i < results.size(); i++) {
-            int next = i + 1;
-            boolean hasNext = next < results.size();
-            if (hasNext && ( results.get(next).getRelevanceScore() > results.get(i).getRelevanceScore() )) {
-                outOfOrder = true;
-            }
-        }
 
-        assert(outOfOrder == false);
-
-        for (SearchResult result : results) {
-            System.out.println(result.getUniqueIdentifier() + " " + result.getRelevanceScore());
+        for (ParsedDocument result : results) {
+            System.out.println(result.getUniqueId() + " " + result.getUniqueId());
         }
     }
 }

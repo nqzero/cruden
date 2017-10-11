@@ -16,9 +16,9 @@ public class ParsedDocument {
 
     private ImmutableList<DocumentTerm> documentTerms;
     private ImmutableSet<String> uniqueWords;
-    private Object uniqueId;
+    private Integer uniqueId;
 
-    public ParsedDocument(List<DocumentTerm> documentTerms, Object uniqueId) {
+    public ParsedDocument(List<DocumentTerm> documentTerms,Integer uniqueId) {
         Preconditions.checkNotNull(uniqueId);
         Preconditions.checkNotNull(documentTerms);
         this.documentTerms = ImmutableList.copyOf(documentTerms);
@@ -60,7 +60,7 @@ public class ParsedDocument {
         return w;
     }
 
-    public Object getUniqueId() {
+    public Integer getUniqueId() {
         return uniqueId;
     }
 }

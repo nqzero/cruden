@@ -1,6 +1,5 @@
 package bradforj287.SimpleTextSearch;
 
-import com.bradforj287.SimpleTextSearch.Document;
 import com.bradforj287.SimpleTextSearch.engine.DocumentParser;
 import com.bradforj287.SimpleTextSearch.engine.ParsedDocument;
 import org.junit.Test;
@@ -26,7 +25,7 @@ public class DocumentParserTest {
 
         DocumentParser parser = new DocumentParser(true, true);
 
-        ParsedDocument pd = parser.parseDocument(new Document(raw, 1));
+        ParsedDocument pd = parser.parse(raw,1);
 
         boolean foundPunctuation = false;
         for (String term : pd.getUniqueWords()) {

@@ -30,7 +30,7 @@ class main {
 
         NodeList nList = doc.getElementsByTagName("row");
 
-        ArrayList<Document> documentList = new ArrayList<>();
+        ArrayList<String> documentList = new ArrayList<>();
         Map<Integer, String> idToBody = new HashMap<>();
 
         for (int i = 0; i < nList.getLength(); i++) {
@@ -40,13 +40,11 @@ class main {
             String body = n.getAttributes().getNamedItem("Body").toString();
             Integer id = i;
 
-            Document document = new Document(body, id);
-            documentList.add(document);
-
+            documentList.add(body);
             idToBody.put(id, body);
         }
 
-        InvertedIndex index = buildIndex(documentList);
+        InvertedIndex index = InvertedIndex.buildIndex(documentList);
 
         String searchTerm = "world";
         ArrayList<Set<ParsedDocument>> batch = index.search(searchTerm, 3);
@@ -54,9 +52,9 @@ class main {
         for (Set<ParsedDocument> set : batch){
             int count = 0;
             for (ParsedDocument pd : set) {
-                Object id = pd.getUniqueId();
+                Integer id = (Integer) pd.getUniqueId();
                 System.out.println(id);
-                System.out.println(idToBody.get(id));
+                System.out.println(documentList.get(id));
                 System.out.println("------------------------------------------------------");
                 if (++count==4) break;
             }
@@ -64,17 +62,5 @@ class main {
 
         System.exit(0);
 
-    }
-    public static InvertedIndex buildIndex(ArrayList<Document> documents) {
-
-        DocumentParser parser = new DocumentParser(true,true);
-
-        ArrayList<ParsedDocument> corpus = new ArrayList<>();
-        for (Document doc : documents)
-            corpus.add(parser.parseDocument(doc.getRawText(),doc.getUniqueIdentifier()));
-        
-        InvertedIndex invertedIndex = new InvertedIndex(corpus);
-
-        return invertedIndex;
     }
 }

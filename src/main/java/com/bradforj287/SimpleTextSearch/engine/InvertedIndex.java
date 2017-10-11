@@ -38,9 +38,21 @@ public class InvertedIndex {
     }
 
     public ArrayList<Set<ParsedDocument>> search(String searchTerm, int maxResults) {
-        ParsedDocument searchDocument = searchTermParser.parseDocument(searchTerm,new Object());
+        ParsedDocument searchDocument = searchTermParser.parse(searchTerm,0);
         ArrayList<Set<ParsedDocument>> documentsToScanSet = getRelevantDocuments(searchDocument);
         return documentsToScanSet;
+    }
+    public static InvertedIndex buildIndex(ArrayList<String> docs) {
+
+        DocumentParser parser = new DocumentParser(true,true);
+
+        ArrayList<ParsedDocument> corpus = new ArrayList<>();
+        for (int ii=0; ii < docs.size(); ii++)
+            corpus.add(parser.parse(docs.get(ii),ii));
+        
+        InvertedIndex invertedIndex = new InvertedIndex(corpus);
+
+        return invertedIndex;
     }
 
 }
