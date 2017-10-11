@@ -21,9 +21,6 @@ public class InvertedIndex {
         }
     }
 
-
-
-
     public ArrayList<ArrayList<Integer>> search(String searchTerm) {
         ArrayList<String> search = parse(searchTerm);
         ArrayList<ArrayList<Integer>> results = new ArrayList<>();
@@ -33,13 +30,11 @@ public class InvertedIndex {
         return results;
     }
 
-
     public static ArrayList<String> parse(String text) {
         if (text==null || text.isEmpty())
             return new ArrayList<>();
 
         text = text.toLowerCase();
-
         List<String> terms = TextParseUtils.tokenize(text);
 
         ArrayList<String> unique = new ArrayList<>();
