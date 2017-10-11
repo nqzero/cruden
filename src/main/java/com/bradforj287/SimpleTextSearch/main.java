@@ -1,8 +1,8 @@
 package com.bradforj287.SimpleTextSearch;
 
+import com.bradforj287.SimpleTextSearch.engine.DocumentParser;
 import com.bradforj287.SimpleTextSearch.engine.InvertedIndex;
 import com.bradforj287.SimpleTextSearch.engine.ParsedDocument;
-import com.google.common.base.Stopwatch;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -46,7 +46,7 @@ class main {
             idToBody.put(id, body);
         }
 
-        InvertedIndex index = SearchIndexFactory.buildIndex(documentList);
+        InvertedIndex index = buildIndex(documentList);
 
         String searchTerm = "world";
         ArrayList<Set<ParsedDocument>> batch = index.search(searchTerm, 3);
@@ -63,5 +63,17 @@ class main {
 
         System.exit(0);
 
+    }
+    public static InvertedIndex buildIndex(Collection<Document> documents) {
+
+        DocumentParser parser = new DocumentParser(true,true);
+
+        ArrayList<ParsedDocument> corpus = new ArrayList<>();
+        for (Document doc : documents)
+            corpus.add(parser.parseDocument(doc));
+        
+        InvertedIndex invertedIndex = new InvertedIndex(corpus);
+
+        return invertedIndex;
     }
 }

@@ -13,21 +13,21 @@ public class InvertedIndex {
     private ImmutableMap<String, DocumentPostingCollection> termToPostings;
     private DocumentParser searchTermParser;
 
-    public InvertedIndex(Corpus corpus) {
+    public InvertedIndex(List<ParsedDocument> corpus) {
         init(corpus);
         searchTermParser = new DocumentParser(false, false);
     }
 
-    private void init(Corpus corpus) {
+    private void init(List<ParsedDocument> corpus) {
         // build term -> posting map
         Map<String, DocumentPostingCollection> termToPostingsMap = new HashMap<>();
-        for (ParsedDocument document : corpus.getParsedDocuments()) {
+        for (ParsedDocument document : corpus) {
             for (DocumentTerm documentTerm : document.getDocumentTerms()) {
                 final String word = documentTerm.getWord();
-                if (!termToPostingsMap.containsKey(word)) {
-                    termToPostingsMap.put(word, new DocumentPostingCollection(word));
-                }
-                termToPostingsMap.get(word).addPosting(documentTerm, document);
+                if (!termToPostingsMap.containsKey(word))
+                    termToPostingsMap.put(word, new DocumentPostingCollection());
+
+                termToPostingsMap.get(word).add(document);
             }
         }
         termToPostings = ImmutableMap.copyOf(termToPostingsMap);

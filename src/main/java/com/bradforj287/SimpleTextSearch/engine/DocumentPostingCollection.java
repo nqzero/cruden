@@ -1,38 +1,19 @@
 package com.bradforj287.SimpleTextSearch.engine;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 
 /**
  * Created by brad on 6/7/15.
  */
 public class DocumentPostingCollection {
 
-    private String word;
-    private List<DocumentPosting> postings;
-    private HashSet<ParsedDocument> uniqueDocuments;
+    private HashSet<ParsedDocument> docset = new HashSet<>();
 
-    public DocumentPostingCollection(String word) {
-        this.word = word;
-        this.postings = new ArrayList<>();
-        this.uniqueDocuments = new HashSet<>();
-    }
-
-    public void addPosting(DocumentTerm documentTerm, ParsedDocument doc) {
-        postings.add(new DocumentPosting(documentTerm, doc));
-        uniqueDocuments.add(doc);
-    }
-
-    public String getWord() {
-        return word;
-    }
-
-    public List<DocumentPosting> getPostings() {
-        return postings;
+    public void add(ParsedDocument doc) {
+        docset.add(doc);
     }
 
     public HashSet<ParsedDocument> getUniqueDocuments() {
-        return uniqueDocuments;
+        return docset;
     }
 }
