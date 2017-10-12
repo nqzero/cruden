@@ -12,6 +12,10 @@ public class InvertedIndex {
     public int numtotal = 0;
     public int numdummy = 0;
     public int nummax = 0;
+    static private ArrayList<Integer> dummy = new ArrayList<>();
+    static private boolean usemax = true;
+    public boolean printmax = false;
+    
 
     public InvertedIndex(List<String> corpus) {
         // build the reverse index, ie from word to list of documents
@@ -19,10 +23,8 @@ public class InvertedIndex {
             add(id,corpus.get(id));
     }
 
-    static private ArrayList<Integer> dummy = new ArrayList<>();
-    static private boolean usemax = true;
     
-    void add(int id,String page) {
+    public void add(int id,String page) {
         numdocs++;
         int max = (numdocs >> 3) + 200;
         ArrayList<String> doc = parse(page);
@@ -34,7 +36,7 @@ public class InvertedIndex {
             if (vals==dummy) nummax++;
             else {
                 if (usemax & vals.size() > max) {
-                    System.out.format("trim: %10s ... %4d of %4d\n",word,vals.size(),numdocs);
+                    if (printmax) System.out.format("trim: %10s ... %4d of %4d\n",word,vals.size(),numdocs);
                     nummax += vals.size();
                     numdummy++;
                     index.put(word,dummy);
