@@ -14,7 +14,7 @@
                 <version>2.4</version>
                 <configuration>
                     <excludes>
-                        <exclude>demo/*</exclude>
+                        <exclude>example/*</exclude>
                     </excludes>
                 </configuration>
             </plugin>

@@ -1,11 +1,11 @@
-package demo;
+package example;
 
 import com.nqzero.SimpleTextSearch.InvertedIndex;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
 
-public class Demo {
+public class Example {
     
     public static void main(String[] args) throws Exception {
         ArrayList<String> docs = new ArrayList<>();
