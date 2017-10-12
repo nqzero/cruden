@@ -20,7 +20,6 @@ public class Example {
         for (int ii=0; ii < 4; ii++)
             System.out.println(docs.get(batch.get(ii)));
 
-        System.out.println("number of hits: " + batch.size());
-        
+        System.out.format("%s, number of hits: %4d\n",index.stats(),batch.size());
     }
 }

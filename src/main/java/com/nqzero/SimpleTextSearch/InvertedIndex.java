@@ -8,19 +8,45 @@ import java.util.*;
  */
 public class InvertedIndex {
     private HashMap<String,ArrayList<Integer>> index = new HashMap<>();
+    public int numdocs = 0;
+    public int numtotal = 0;
+    public int numdummy = 0;
+    public int nummax = 0;
 
     public InvertedIndex(List<String> corpus) {
         // build the reverse index, ie from word to list of documents
-        for (int id=0; id < corpus.size(); id++) {
-            String page = corpus.get(id);
-            ArrayList<String> doc = parse(page);
-            for (String word : doc) {
-                if (!index.containsKey(word)) index.put(word, new ArrayList());
-                index.get(word).add(id);
+        for (int id=0; id < corpus.size(); id++)
+            add(id,corpus.get(id));
+    }
+
+    static private ArrayList<Integer> dummy = new ArrayList<>();
+    static private boolean usemax = true;
+    
+    void add(int id,String page) {
+        numdocs++;
+        int max = (numdocs >> 3) + 200;
+        ArrayList<String> doc = parse(page);
+        for (String word : doc) {
+            numtotal++;
+            ArrayList<Integer> vals = index.get(word);
+            if (vals==null)
+                index.put(word,vals = new ArrayList());
+            if (vals==dummy) nummax++;
+            else {
+                if (usemax & vals.size() > max) {
+                    System.out.format("trim: %10s ... %4d of %4d\n",word,vals.size(),numdocs);
+                    nummax += vals.size();
+                    numdummy++;
+                    index.put(word,dummy);
+                }
+                else
+                    vals.add(id);
             }
         }
     }
-    
+    public String stats() {
+        return String.format("stats: %4d, %4d, %4d, %4d",numdocs,numtotal,numdummy,nummax);
+    }
     public ArrayList<Integer> join(ArrayList<Integer> ... list) {
         // fixme - actually join
         return list[0];
