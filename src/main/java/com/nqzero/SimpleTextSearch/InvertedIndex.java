@@ -49,7 +49,7 @@ public class InvertedIndex {
     }
     public ArrayList<Integer> join(ArrayList<Integer> ... list) {
         // fixme - actually join
-        return list[0];
+        return list.length==0 || list[0]==null ? new ArrayList<>():list[0];
     }
 
     public ArrayList<Integer> search(String searchTerm) {
