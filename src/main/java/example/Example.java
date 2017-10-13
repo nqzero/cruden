@@ -28,9 +28,10 @@ public class Example {
     void run() {
         InvertedIndex index = new InvertedIndex(docs);
         query(index,"world taste",1);
+        query(index,"hops",1);
         query(index,"co2 hops",1);
         query(index,"darker warmer lighter",1);
-        
+
         time();
         int last = 10;
         for (int jj=0; jj <= last; jj++)

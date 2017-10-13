@@ -63,7 +63,7 @@ public class InvertedIndex {
         int ii = 0, last = valid.size()-1;
         for (Integer index : lists[valid.get(ii)])
             found.put(index,new Ibox(1));
-        for (; ii < last; ii++)
+        for (ii=1; ii < last; ii++)
             for (Integer index : lists[valid.get(ii)]) {
                 Ibox box = found.get(index);
                 if (box != null) box.val++;
@@ -87,7 +87,6 @@ public class InvertedIndex {
 
         for (int ii=0; ii < search.size(); ii++)
             data[ii] = index.get(search.get(ii));
-
         return join(data);
     }
 

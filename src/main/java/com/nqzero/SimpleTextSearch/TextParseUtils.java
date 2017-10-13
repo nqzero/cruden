@@ -3,7 +3,6 @@ package com.nqzero.SimpleTextSearch;
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.process.CoreLabelTokenFactory;
 import edu.stanford.nlp.process.PTBTokenizer;
-import edu.stanford.nlp.process.TokenizerFactory;
 import org.tartarus.snowball.ext.englishStemmer;
 
 import java.io.StringReader;
