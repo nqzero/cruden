@@ -22,7 +22,7 @@ public class DocumentParserTest {
                 "<p>Am I correct, and which countries' flags are the second and fourth?</p>\n" +
                 "\"";
 
-        ArrayList<String> terms = InvertedIndex.parse(raw);
+        ArrayList<String> terms = new InvertedIndex().parse(raw);
 
         boolean foundPunctuation = false;
         for (String term : terms) {

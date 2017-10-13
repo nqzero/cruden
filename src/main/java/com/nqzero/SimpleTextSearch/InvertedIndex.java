@@ -15,8 +15,10 @@ public class InvertedIndex {
     static private ArrayList<Integer> dummy = new ArrayList<>();
     static private boolean usemax = true;
     public boolean printmax = false;
+    TextParseUtils tpu = new TextParseUtils();
     
 
+    public InvertedIndex() {}
     public InvertedIndex(List<String> corpus) {
         // build the reverse index, ie from word to list of documents
         for (int id=0; id < corpus.size(); id++)
@@ -90,20 +92,17 @@ public class InvertedIndex {
         return join(data);
     }
 
-    public static ArrayList<String> parse(String text) {
+    public ArrayList<String> parse(String text) {
         if (text==null || text.isEmpty())
             return new ArrayList<>();
 
-        text = text.toLowerCase();
-        List<String> terms = TextParseUtils.tokenize(text);
+        List<String> terms = tpu.tokenize(text);
 
         ArrayList<String> unique = new ArrayList<>();
         HashSet<String> unseen = new HashSet();
-        for (String str : terms) {
-            String stem = TextParseUtils.stemWord(str);
+        for (String stem : terms)
             if (! StopWordHelper.isStopWord(stem) && unseen.add(stem))
                 unique.add(stem);
-        }
 
         return unique;
     }
