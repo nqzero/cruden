@@ -107,4 +107,10 @@ public class InvertedIndex {
 
         return unique;
     }
+    public static void main(String[] args) {
+        String doc = "don't hello world the quick brown. fox jumped/over the lazy-dog. light lighter warm warmer dark darker";
+        ArrayList<String> list = new InvertedIndex(new ArrayList()).parse(doc);
+        for (String word : list)
+            System.out.println(word);
+    }
 }

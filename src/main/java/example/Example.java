@@ -31,6 +31,7 @@ public class Example {
         query(index,"hops",1);
         query(index,"co2 hops",1);
         query(index,"darker warmer lighter",1);
+        query(index,"dark warm light",1);
 
         time();
         int last = 10;
