@@ -15,7 +15,7 @@ import java.util.List;
  * Created by brad on 6/6/15.
  */
 public class TextParseUtils {
-    static boolean dbg = false;
+    public static boolean dbg = false;
     static HashSet<String> map = new HashSet();
 
 
