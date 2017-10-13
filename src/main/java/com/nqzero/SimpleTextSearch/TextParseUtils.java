@@ -5,8 +5,6 @@ import java.io.StringReader;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
-import opennlp.tools.tokenize.WhitespaceTokenizer;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
@@ -27,31 +25,6 @@ public class TextParseUtils {
         stemmer.stem();
         return stemmer.getCurrent();
     }
-
-    public static List<String> tokenize2(String rawText) {
-        List<String> retVal = new ArrayList<>();
-
-        for (String str : tokenizer.tokenize(rawText)) {
-
-            // fixme - also split, eg bottom-shelf -> bottom, shelf, bottomshelf
-            // fixme - allow numbers in words
-            String old = str;
-            str = str.replaceAll("[^a-zA-Z ]", "");
-
-            if (dbg && !str.equals(old) && map.add(old))
-                System.out.format("%40s -> %40s\n",old,str);
-            
-            if (str.isEmpty()) {
-                continue;
-            }
-
-            retVal.add(str);
-        }
-
-
-        return retVal;
-    }
-    static WhitespaceTokenizer tokenizer = WhitespaceTokenizer.INSTANCE;
     
     static ArrayList<String> tokenize(String raw) {
         ArrayList<String> words = new ArrayList();
@@ -60,6 +33,7 @@ public class TextParseUtils {
             ts.reset();
             while (ts.incrementToken()) {
                 String term = ts.getAttribute(CharTermAttribute.class).toString();
+                // fixme - strip and split at non-word chars
                 words.add(term);
             }
             ts.end();
@@ -73,9 +47,8 @@ public class TextParseUtils {
         for (String word:"warm warmer light lighter".split(" "))
             System.out.println(stemWord(word));
         String doc = "don't hello world the quick brown. fox jumped/over the lazy-dog";
-        for (String word : tokenizer.tokenize(doc))
+        for (String word : tokenize(doc))
                 System.out.println(word);
-        tokenize(doc);
     }
     
 
