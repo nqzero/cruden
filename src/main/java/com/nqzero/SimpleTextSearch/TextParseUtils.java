@@ -9,6 +9,7 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import opennlp.tools.tokenize.WhitespaceTokenizer;
 
 /**
  * Created by brad on 6/6/15.
@@ -28,14 +29,7 @@ public class TextParseUtils {
     public static List<String> tokenize(String rawText) {
         List<String> retVal = new ArrayList<>();
 
-        PTBTokenizer<CoreLabel> ptbt =
-                new PTBTokenizer<>(new StringReader(rawText),new CoreLabelTokenFactory(), "untokenizable=noneDelete");
-        while (ptbt.hasNext()) {
-            CoreLabel label = ptbt.next();
-            String str = label.toString();
-            if (str == null) {
-                continue;
-            }
+        for (String str : tokenizer.tokenize(rawText)) {
 
             // fixme - also split, eg bottom-shelf -> bottom, shelf, bottomshelf
             // fixme - allow numbers in words
@@ -55,5 +49,12 @@ public class TextParseUtils {
 
         return retVal;
     }
+    static WhitespaceTokenizer tokenizer = WhitespaceTokenizer.INSTANCE;
+
+    public static void main(String[] args) {
+        for (String word : tokenizer.tokenize("don't hello world the quick brown. fox jumped/over the lazy-dog"))
+                System.out.println(word);
+    }
+    
 
 }
