@@ -49,9 +49,36 @@ public class InvertedIndex {
     public String stats() {
         return String.format("stats: %4d, %4d, %4d, %4d",numdocs,numtotal,numdummy,nummax);
     }
-    public ArrayList<Integer> join(ArrayList<Integer> ... list) {
-        // fixme - actually join
-        return list.length==0 || list[0]==null ? new ArrayList<>():list[0];
+    public ArrayList<Integer> join(ArrayList<Integer> ... lists) {
+        ArrayList<Integer> valid = new ArrayList();
+        for (int ii=0; ii < lists.length; ii++)
+            if (lists[ii] != null & lists[ii] != dummy)
+                valid.add(ii);
+        if (valid.isEmpty())
+             return new ArrayList<>();
+        if (valid.size()==1)
+            return lists[valid.get(0)];
+        HashMap<Integer,Ibox> found = new HashMap();
+        ArrayList<Integer> result = new ArrayList<>();
+        int ii = 0, last = valid.size()-1;
+        for (Integer index : lists[valid.get(ii)])
+            found.put(index,new Ibox(1));
+        for (; ii < last; ii++)
+            for (Integer index : lists[valid.get(ii)]) {
+                Ibox box = found.get(index);
+                if (box != null) box.val++;
+            }
+        for (Integer index : lists[valid.get(last)]) {
+            Ibox box = found.get(index);
+            if (box != null && box.val==last)
+                result.add(index);
+        }
+        return result;
+    }
+    static class Ibox {
+        public int val;
+        public Ibox() {};
+        public Ibox(int $val) { val = $val; };
     }
 
     public ArrayList<Integer> search(String searchTerm) {
