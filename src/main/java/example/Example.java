@@ -4,7 +4,11 @@ import com.nqzero.SimpleTextSearch.InvertedIndex;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.function.Consumer;
 
 public class Example {
     ArrayList<String> docs;
@@ -32,6 +36,9 @@ public class Example {
         query(index,"co2 hops",1);
         query(index,"darker warmer lighter",1);
         query(index,"dark warm light",1);
+        printStop(index,200);
+        System.out.println("---------------------------------------------------------------------");
+        printOccur(index,200);
 
         time();
         int last = 10;
@@ -71,4 +78,30 @@ public class Example {
         for (int ii=0; ii < num; ii++)
             System.out.println("\t"+docs.get(res.get(ii)));
     }
+    public static void printStop(InvertedIndex index,int num) {
+        foreach(num,
+                sort(index.copyStop(),(x1,x2)
+                        -> x2.getValue().val-x1.getValue().val).iterator(),
+                item
+                        -> System.out.format("%40s -> %5d\n",item.getKey(),item.getValue().val));
+    }
+    public static void printOccur(InvertedIndex index,Integer num) {
+        foreach(num,
+                sort(index.copyIndex(),(x1,x2)
+                        -> x2.getValue().size()-x1.getValue().size()).iterator(),
+                item
+                        -> System.out.format("%40s -> %5d\n",item.getKey(),item.getValue().size()));
+    }
+
+    public static <KK,VV> ArrayList<Map.Entry<KK,VV>> sort(Map<KK,VV> map,Comparator<? super Map.Entry<KK,VV>> cmp) {
+        ArrayList<Map.Entry<KK,VV>> array = new ArrayList<>(map.entrySet());
+        if (cmp!=null) array.sort(cmp);
+        return array;
+    }
+    public static <TT> void foreach(Integer max,Iterator<TT> iter,Consumer<TT> action) {
+        if (max==null) max = Integer.MAX_VALUE;
+        for (int ii=0; ii < max && iter.hasNext(); ii++)
+            action.accept(iter.next());
+    }
+    
 }

@@ -22,12 +22,14 @@ public class InvertedIndex {
     static private boolean usemax = true;
     public boolean printmax = false;
     Analyzer analyzer = new StandardAnalyzer();
+    public boolean countStops = false;
 
     
 
     public InvertedIndex() {}
-    public InvertedIndex(List<String> corpus) {
-        // build the reverse index, ie from word to list of documents
+    public InvertedIndex(List<String> corpus) { this(corpus,false); }
+    public InvertedIndex(List<String> corpus,boolean $countStops) {
+        countStops = $countStops;
         for (int id=0; id < corpus.size(); id++)
             add(id,corpus.get(id));
     }
@@ -87,7 +89,7 @@ public class InvertedIndex {
         return result;
     }
 
-    static class Ibox {
+    public static class Ibox {
         public int val;
         public Ibox() {};
         public Ibox(int $val) { val = $val; };
@@ -111,10 +113,27 @@ public class InvertedIndex {
         ArrayList<String> unique = new ArrayList<>();
         HashSet<String> unseen = new HashSet();
         for (String stem : terms)
-            if (! StopWordHelper.isStopWord(stem) && unseen.add(stem))
+            if (! stop(stem) && unseen.add(stem))
                 unique.add(stem);
 
         return unique;
+    }
+    boolean stop(String word) {
+        boolean stop = StopWordHelper.isStopWord(word);
+        if (countStops & stop) {
+            Ibox box = stopMap.get(word);
+            if (box==null)
+                stopMap.put(word,box = new Ibox());
+            box.val++;
+        }
+        return stop;
+    }
+    private HashMap<String,Ibox> stopMap = new HashMap<>();
+    public HashMap<String,ArrayList<Integer>> copyIndex() {
+        return new HashMap<>(index);
+    }
+    public HashMap<String,Ibox> copyStop() {
+        return new HashMap<>(stopMap);
     }
 
     ArrayList<String> tokenize(String doc) {
