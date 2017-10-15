@@ -15,18 +15,24 @@ public class Example {
     long time;
     long time() { return time = new Date().getTime(); }
 
+    public Example() { docs = new ArrayList(); }
     public Example(ArrayList<String> docs) {
         this.docs = docs;
     }
     
     public static void main(String[] args) throws Exception {
-        ArrayList<String> docs = new ArrayList<>();
-        BufferedReader br = new BufferedReader(new FileReader("doc/Posts.txt"));
-        for(String line; (line = br.readLine()) != null; )
-            docs.add(line);
-
-        Example main = new Example(docs);
-        main.run();
+        Example example = new Example();
+        example.read();
+        example.run();
+    }
+    public Example read() {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("doc/Posts.txt"));
+            for(String line; (line = br.readLine()) != null; )
+                docs.add(line);
+        }
+        catch (Exception ex) { throw new RuntimeException(ex); }
+        return this;
     }
     
     void run() {
