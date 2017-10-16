@@ -70,7 +70,7 @@ public class InvertedIndex {
         return String.format("stats: %4d, %4d, %4d, %4d",numdocs,numtotal,numdummy,nummax);
     }
 
-    public <TT extends Counts> TT join(TT ... lists) {
+    public static <TT extends Counts> TT join(TT ... lists) {
         ArrayList<Integer> valid = new ArrayList();
         for (int ii=0; ii < lists.length; ii++)
             if (lists[ii] != null && lists[ii].count==0)
@@ -149,7 +149,7 @@ public class InvertedIndex {
 
     ArrayList<String> tokenize(String doc) {
         ArrayList<String> words = new ArrayList();
-        try (TokenStream raw = analyzer.tokenStream("myfield",doc)) {
+        try (TokenStream raw = analyzer.tokenStream(null,doc)) {
             KStemFilter ts = new KStemFilter(raw);
             CharTermAttribute term = ts.getAttribute(CharTermAttribute.class);
             ts.reset();
