@@ -32,11 +32,12 @@ public class InvertedIndex {
     }
 
     public InvertedIndex() {}
-    public InvertedIndex(List<String> corpus) { this(corpus,false); }
-    public InvertedIndex(List<String> corpus,boolean $countStops) {
-        countStops = $countStops;
+    public InvertedIndex(boolean countStops) { this.countStops = countStops; }
+
+    public InvertedIndex add(int first,List<String> corpus) {
         for (int id=0; id < corpus.size(); id++)
-            add(id,corpus.get(id));
+            add(first+id,corpus.get(id));
+        return this;
     }
 
     public void add(int id,String page) {
@@ -171,7 +172,7 @@ public class InvertedIndex {
 
     public static void main(String[] args) {
         String doc = "don't hello world the quick brown. fox jumped/over the lazy-dog. light lighter warm warmer dark darker";
-        ArrayList<String> list = new InvertedIndex(new ArrayList()).parse(doc);
+        ArrayList<String> list = new InvertedIndex().parse(doc);
         for (String word : list)
             System.out.println(word);
         String adj = "warm warmer light lighter ";

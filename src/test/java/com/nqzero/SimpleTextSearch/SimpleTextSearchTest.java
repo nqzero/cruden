@@ -82,7 +82,7 @@ public class SimpleTextSearchTest {
         documents.add(doc3);
         documents.add(doc4);
 
-        InvertedIndex index = new InvertedIndex(documents);
+        InvertedIndex index = new InvertedIndex().add(0,documents);
 
         String searchTerm = "Mad in pursuit and in possession so";
 

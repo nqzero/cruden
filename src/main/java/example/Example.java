@@ -37,7 +37,7 @@ public class Example {
     }
     
     void run() {
-        InvertedIndex index = new InvertedIndex(docs,true);
+        InvertedIndex index = new InvertedIndex(true).add(0,docs);
         query(index,"world taste",1);
         query(index,"hops",1);
         query(index,"co2 hops",1);
@@ -54,7 +54,7 @@ public class Example {
     }
     
     void loop(int kdoc,int scan) {
-        InvertedIndex index = new InvertedIndex(docs);
+        InvertedIndex index = new InvertedIndex().add(0,docs);
 
         // sprinkle a little salt to try to keep the jit honest
         index.add(docs.size(),docs.get(kdoc)+" loving the flavour");
