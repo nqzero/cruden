@@ -37,7 +37,7 @@ public class Example {
     }
     
     void run() {
-        InvertedIndex index = new InvertedIndex(docs,true,true);
+        InvertedIndex index = new InvertedIndex(docs,true);
         query(index,"world taste",1);
         query(index,"hops",1);
         query(index,"co2 hops",1);
