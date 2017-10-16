@@ -1,5 +1,6 @@
 package com.nqzero.SimpleTextSearch;
 
+import com.nqzero.cruden.InvertedIndex;
 import java.util.ArrayList;
 import org.junit.Test;
 

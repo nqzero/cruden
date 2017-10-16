@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.nqzero</groupId>
-    <artifactId>SimpleTextSearch-Demo</artifactId>
+    <artifactId>cruden-demo</artifactId>
     <version>0.9.0</version>
 
     <properties>
@@ -18,7 +18,7 @@
         </dependency>
         <dependency>
 	    <groupId>com.nqzero</groupId>
-	    <artifactId>SimpleTextSearch</artifactId>
+	    <artifactId>cruden</artifactId>
 	    <version>0.9.0</version>
         </dependency>
     </dependencies>

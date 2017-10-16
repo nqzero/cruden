@@ -1,4 +1,4 @@
-package com.nqzero.SimpleTextSearch;
+package com.nqzero.cruden;
 
 
 import java.io.IOException;

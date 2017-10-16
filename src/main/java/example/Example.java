@@ -1,7 +1,7 @@
 package example;
 
-import com.nqzero.SimpleTextSearch.InvertedIndex;
-import static com.nqzero.SimpleTextSearch.InvertedIndex.count;
+import com.nqzero.cruden.InvertedIndex;
+import static com.nqzero.cruden.InvertedIndex.count;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;

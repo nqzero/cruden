@@ -1,6 +1,6 @@
 package demo;
 
-import com.nqzero.SimpleTextSearch.InvertedIndex;
+import com.nqzero.cruden.InvertedIndex;
 import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
