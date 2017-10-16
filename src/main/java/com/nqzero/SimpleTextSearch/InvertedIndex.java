@@ -13,7 +13,7 @@ import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
  * Created by brad on 6/6/15.
  */
 public class InvertedIndex {
-    private HashMap<String,ArrayList<Integer>> index = new HashMap<>();
+    private HashMap<String,Counts> index = new HashMap<>();
     public int numdocs = 0;
     public int numtotal = 0;
     public int numdummy = 0;
@@ -26,7 +26,7 @@ public class InvertedIndex {
     private boolean countStops;
     private boolean countMax;
 
-    
+    public static class Counts extends ArrayList<Integer> {}
 
     public InvertedIndex() {}
     public InvertedIndex(List<String> corpus) { this(corpus,false,false); }
@@ -40,7 +40,7 @@ public class InvertedIndex {
     public static int count(ArrayList<Integer> v1) {
         return v1 instanceof Dummy ? ((Dummy) v1).count:v1.size();
     }
-    private static class Dummy extends ArrayList<Integer> {
+    private static class Dummy extends Counts {
         int count;
     }
     Dummy dummy(int count) {
@@ -55,9 +55,9 @@ public class InvertedIndex {
         ArrayList<String> doc = parse(page);
         for (String word : doc) {
             numtotal++;
-            ArrayList<Integer> vals = index.get(word);
+            Counts vals = index.get(word);
             if (vals==null)
-                index.put(word,vals = new ArrayList());
+                index.put(word,vals = new Counts());
             if (vals==dummy | vals instanceof Dummy) {
                 nummax++;
                 ((Dummy) vals).count++;
@@ -79,17 +79,17 @@ public class InvertedIndex {
         return String.format("stats: %4d, %4d, %4d, %4d",numdocs,numtotal,numdummy,nummax);
     }
 
-    public ArrayList<Integer> join(ArrayList<Integer> ... lists) {
+    public <TT extends ArrayList<Integer>> TT join(TT ... lists) {
         ArrayList<Integer> valid = new ArrayList();
         for (int ii=0; ii < lists.length; ii++)
             if (lists[ii] != null & lists[ii] != dummy & !(lists[ii] instanceof Dummy))
                 valid.add(ii);
         if (valid.isEmpty())
-             return new ArrayList<>();
+             return null;
+        TT result = lists[valid.get(0)];
         if (valid.size()==1)
-            return lists[valid.get(0)];
+            return result;
         HashMap<Integer,Ibox> found = new HashMap();
-        ArrayList<Integer> result = new ArrayList<>();
         int ii = 0, last = valid.size()-1;
         for (Integer index : lists[valid.get(ii)])
             found.put(index,new Ibox(1));
@@ -98,6 +98,7 @@ public class InvertedIndex {
                 Ibox box = found.get(index);
                 if (box != null) box.val++;
             }
+        result.clear();
         for (Integer index : lists[valid.get(last)]) {
             Ibox box = found.get(index);
             if (box != null && box.val==last)
@@ -112,13 +113,14 @@ public class InvertedIndex {
         public Ibox(int $val) { val = $val; };
     }
 
-    public ArrayList<Integer> search(String searchTerm) {
+    public Counts search(String searchTerm) {
         ArrayList<String> search = parse(searchTerm);
-        ArrayList<Integer> [] data = new ArrayList[search.size()];
+        Counts [] data = new Counts[search.size()];
 
         for (int ii=0; ii < search.size(); ii++)
             data[ii] = index.get(search.get(ii));
-        return join(data);
+        Counts result = join(data);
+        return result==null ? new Counts():result;
     }
 
     public ArrayList<String> parse(String text) {
@@ -147,7 +149,7 @@ public class InvertedIndex {
         return stop;
     }
     private HashMap<String,Ibox> stopMap = new HashMap<>();
-    public HashMap<String,ArrayList<Integer>> copyIndex() {
+    public HashMap<String,Counts> copyIndex() {
         return new HashMap<>(index);
     }
     public HashMap<String,Ibox> copyStop() {
