@@ -27,6 +27,9 @@ public class InvertedIndex {
     public static class Counts extends ArrayList<Integer> {
         int count;
     }
+    public static int count(Counts v1) {
+        return v1.count==0 ? v1.size():v1.count;
+    }
 
     public InvertedIndex() {}
     public InvertedIndex(List<String> corpus) { this(corpus,false); }
@@ -36,9 +39,6 @@ public class InvertedIndex {
             add(id,corpus.get(id));
     }
 
-    public static int count(Counts v1) {
-        return v1.count==0 ? v1.size():v1.size();
-    }
     public void add(int id,String page) {
         numdocs++;
         int max = (numdocs >> 3) + 200;
