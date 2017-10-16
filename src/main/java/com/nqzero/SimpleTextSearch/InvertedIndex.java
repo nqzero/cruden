@@ -18,23 +18,37 @@ public class InvertedIndex {
     public int numtotal = 0;
     public int numdummy = 0;
     public int nummax = 0;
-    static private ArrayList<Integer> dummy = new ArrayList<>();
+    static private Dummy dummy = new Dummy();
     static private boolean usemax = true;
+    static private boolean usestop = true;
     public boolean printmax = false;
     Analyzer analyzer = new StandardAnalyzer();
-    public boolean countStops = false;
+    private boolean countStops;
+    private boolean countMax;
 
     
 
     public InvertedIndex() {}
-    public InvertedIndex(List<String> corpus) { this(corpus,false); }
-    public InvertedIndex(List<String> corpus,boolean $countStops) {
+    public InvertedIndex(List<String> corpus) { this(corpus,false,false); }
+    public InvertedIndex(List<String> corpus,boolean $countStops,boolean $countMax) {
         countStops = $countStops;
+        countMax = $countMax;
         for (int id=0; id < corpus.size(); id++)
             add(id,corpus.get(id));
     }
 
-    
+    public static int count(ArrayList<Integer> v1) {
+        return v1 instanceof Dummy ? ((Dummy) v1).count:v1.size();
+    }
+    private static class Dummy extends ArrayList<Integer> {
+        int count;
+    }
+    Dummy dummy(int count) {
+        if (!countMax) return dummy;
+        Dummy obj = new Dummy();
+        obj.count = count;
+        return obj;
+    }
     public void add(int id,String page) {
         numdocs++;
         int max = (numdocs >> 3) + 200;
@@ -44,13 +58,16 @@ public class InvertedIndex {
             ArrayList<Integer> vals = index.get(word);
             if (vals==null)
                 index.put(word,vals = new ArrayList());
-            if (vals==dummy) nummax++;
+            if (vals==dummy | vals instanceof Dummy) {
+                nummax++;
+                ((Dummy) vals).count++;
+            }
             else {
                 if (usemax & vals.size() > max) {
                     if (printmax) System.out.format("trim: %10s ... %4d of %4d\n",word,vals.size(),numdocs);
                     nummax += vals.size();
                     numdummy++;
-                    index.put(word,dummy);
+                    index.put(word,dummy(vals.size()));
                 }
                 else
                     vals.add(id);
@@ -65,7 +82,7 @@ public class InvertedIndex {
     public ArrayList<Integer> join(ArrayList<Integer> ... lists) {
         ArrayList<Integer> valid = new ArrayList();
         for (int ii=0; ii < lists.length; ii++)
-            if (lists[ii] != null & lists[ii] != dummy)
+            if (lists[ii] != null & lists[ii] != dummy & !(lists[ii] instanceof Dummy))
                 valid.add(ii);
         if (valid.isEmpty())
              return new ArrayList<>();
@@ -119,6 +136,7 @@ public class InvertedIndex {
         return unique;
     }
     boolean stop(String word) {
+        if (! usestop) return false;
         boolean stop = StopWordHelper.isStopWord(word);
         if (countStops & stop) {
             Ibox box = stopMap.get(word);

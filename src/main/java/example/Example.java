@@ -1,6 +1,7 @@
 package example;
 
 import com.nqzero.SimpleTextSearch.InvertedIndex;
+import static com.nqzero.SimpleTextSearch.InvertedIndex.count;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -36,13 +37,13 @@ public class Example {
     }
     
     void run() {
-        InvertedIndex index = new InvertedIndex(docs);
+        InvertedIndex index = new InvertedIndex(docs,true,true);
         query(index,"world taste",1);
         query(index,"hops",1);
         query(index,"co2 hops",1);
         query(index,"darker warmer lighter",1);
         query(index,"dark warm light",1);
-        printStop(index,200);
+        printStop(index,500);
         System.out.println("---------------------------------------------------------------------");
         printOccur(index,200);
 
@@ -94,9 +95,9 @@ public class Example {
     public static void printOccur(InvertedIndex index,Integer num) {
         foreach(num,
                 sort(index.copyIndex(),(x1,x2)
-                        -> x2.getValue().size()-x1.getValue().size()).iterator(),
+                        -> count(x2.getValue())-count(x1.getValue())).iterator(),
                 item
-                        -> System.out.format("%40s -> %5d\n",item.getKey(),item.getValue().size()));
+                        -> System.out.format("%40s -> %5d\n",item.getKey(),count(item.getValue())));
     }
 
     public static <KK,VV> ArrayList<Map.Entry<KK,VV>> sort(Map<KK,VV> map,Comparator<? super Map.Entry<KK,VV>> cmp) {
