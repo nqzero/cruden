@@ -48,12 +48,12 @@ public class Example {
         printOccur(index,200);
 
         time();
-        int last = 10;
+        int last = 30, step = last/3;
         for (int jj=0; jj <= last; jj++)
-            loop(jj,jj > last-5);
+            loop(jj,jj/step);
     }
     
-    void loop(int kdoc,boolean scan) {
+    void loop(int kdoc,int scan) {
         InvertedIndex index = new InvertedIndex(docs);
 
         // sprinkle a little salt to try to keep the jit honest
@@ -62,19 +62,21 @@ public class Example {
         String searchTerm = "world";
         int batch = index.search(searchTerm).size();
 
+        // fixme - the order of scan effects the JIT, so doing the fast version first
+        //   no good way to characterize overall performance which would be a mix of the 2
         double delta = (-time + time())/1000.0;
-        int total = scan ? countSquared(index):0;
+        int total = scan > 0 ? countSquared(index,scan < 2):0;
 
         double d2 = (-time + time())/1000.0;
         System.out.format("%5.2f +%5.2f sec %s, number of hits: %4d --> %d\n",
                 delta,d2,index.stats(),batch,total);
     }
     
-    int countSquared(InvertedIndex index) {
+    int countSquared(InvertedIndex index,boolean exact) {
         int total = 0;
         for (String doc : docs)
             for (String word : doc.split(" "))
-                total += index.search(word).size();
+                total += index.search(word,exact).size();
         return total;
     }
     

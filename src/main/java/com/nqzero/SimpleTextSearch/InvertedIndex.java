@@ -104,6 +104,13 @@ public class InvertedIndex {
         public Ibox(int $val) { val = $val; };
     }
 
+    public Counts search(String term,boolean exact) {
+        return exact ? searchExact(term):search(term);
+    }
+    public Counts searchExact(String term) {
+        Counts result = index.get(term);
+        return result==null ? new Counts():result;
+    }
     public Counts search(String searchTerm) {
         ArrayList<String> search = parse(searchTerm);
         Counts [] data = new Counts[search.size()];
