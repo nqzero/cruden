@@ -1,7 +1,9 @@
 package example;
 
 import com.nqzero.cruden.InvertedIndex;
+import static com.nqzero.cruden.InvertedIndex.add;
 import static com.nqzero.cruden.InvertedIndex.count;
+import com.nqzero.cruden.BaseInverted;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ import java.util.function.Consumer;
 public class Example {
     ArrayList<String> docs;
     long time;
+    boolean useBase = true;
     long time() { return time = new Date().getTime(); }
 
     public Example() { docs = new ArrayList(); }
@@ -37,24 +40,25 @@ public class Example {
     }
     
     void run() {
-        InvertedIndex index = new InvertedIndex(true).add(0,docs);
+        BaseInverted index = add(useBase ? new BaseInverted():new InvertedIndex(true),0,docs);
         query(index,"world taste",1);
         query(index,"hops",1);
         query(index,"co2 hops",1);
         query(index,"darker warmer lighter",1);
         query(index,"dark warm light",1);
-        printStop(index,500);
+        InvertedIndex full = useBase ? null : (InvertedIndex) index;
+        printStop(full,500);
         System.out.println("---------------------------------------------------------------------");
-        printOccur(index,200);
+        printOccur(full,200);
 
         time();
-        int last = 30, step = last/3;
+        int last = 60, step = last/3;
         for (int jj=0; jj <= last; jj++)
             loop(jj,jj/step);
     }
     
     void loop(int kdoc,int scan) {
-        InvertedIndex index = new InvertedIndex().add(0,docs);
+        BaseInverted index = add((useBase ? new InvertedIndex():new InvertedIndex()),0,docs);
 
         // sprinkle a little salt to try to keep the jit honest
         index.add(docs.size(),docs.get(kdoc)+" loving the flavour");
@@ -72,7 +76,7 @@ public class Example {
                 delta,d2,index.stats(),batch,total);
     }
     
-    int countSquared(InvertedIndex index,boolean exact) {
+    int countSquared(BaseInverted index,boolean exact) {
         int total = 0;
         for (String doc : docs)
             for (String word : doc.split(" "))
@@ -80,7 +84,7 @@ public class Example {
         return total;
     }
     
-    void query(InvertedIndex index,String query,int max) {
+    void query(BaseInverted index,String query,int max) {
         ArrayList<Integer> res = index.search(query);
         int num = Math.min(max,res.size());
         System.out.format("%40s --> %4d%s",query,res.size(),num==0 ? "\n":":");
@@ -88,6 +92,7 @@ public class Example {
             System.out.println("\t"+docs.get(res.get(ii)));
     }
     public static void printStop(InvertedIndex index,int num) {
+        if (index==null) return;
         foreach(num,
                 sort(index.copyStop(),(x1,x2)
                         -> x2.getValue().val-x1.getValue().val).iterator(),
@@ -95,6 +100,7 @@ public class Example {
                         -> System.out.format("%40s -> %5d\n",item.getKey(),item.getValue().val));
     }
     public static void printOccur(InvertedIndex index,Integer num) {
+        if (index==null) return;
         foreach(num,
                 sort(index.copyIndex(),(x1,x2)
                         -> count(x2.getValue())-count(x1.getValue())).iterator(),

@@ -38,7 +38,7 @@ class Main {
             docs.add(text);
         }
 
-        InvertedIndex index = new InvertedIndex(docs);
+        InvertedIndex index = new InvertedIndex().add(0,docs);
 
         String searchTerm = "world";
         ArrayList<Integer> batch = index.search(searchTerm);

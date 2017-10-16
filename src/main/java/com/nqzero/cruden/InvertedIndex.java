@@ -1,19 +1,9 @@
 package com.nqzero.cruden;
 
 
-import java.io.IOException;
 import java.util.*;
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.TokenStream;
-import org.apache.lucene.analysis.en.KStemFilter;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 
-/**
- * Created by brad on 6/6/15.
- */
-public class InvertedIndex {
-    private HashMap<String,Counts> index = new HashMap<>();
+public class InvertedIndex extends BaseInverted {
     public int numdocs = 0;
     public int numtotal = 0;
     public int numdummy = 0;
@@ -21,7 +11,6 @@ public class InvertedIndex {
     static private boolean usemax = true;
     static private boolean usestop = true;
     public boolean printmax = false;
-    Analyzer analyzer = new StandardAnalyzer();
     private boolean countStops;
 
     public static class Counts extends ArrayList<Integer> {
@@ -34,10 +23,13 @@ public class InvertedIndex {
     public InvertedIndex() {}
     public InvertedIndex(boolean countStops) { this.countStops = countStops; }
 
-    public InvertedIndex add(int first,List<String> corpus) {
+    public static <TT extends BaseInverted> TT add(TT invert,int first,List<String> corpus) {
         for (int id=0; id < corpus.size(); id++)
-            add(first+id,corpus.get(id));
-        return this;
+            invert.add(first+id,corpus.get(id));
+        return invert;
+    }
+    public InvertedIndex add(int first,List<String> corpus) {
+        return add(this,first,corpus);
     }
 
     public void add(int id,String page) {
@@ -105,37 +97,6 @@ public class InvertedIndex {
         public Ibox(int $val) { val = $val; };
     }
 
-    public Counts search(String term,boolean exact) {
-        return exact ? searchExact(term):search(term);
-    }
-    public Counts searchExact(String term) {
-        Counts result = index.get(term);
-        return result==null ? new Counts():result;
-    }
-    public Counts search(String searchTerm) {
-        ArrayList<String> search = parse(searchTerm);
-        Counts [] data = new Counts[search.size()];
-
-        for (int ii=0; ii < search.size(); ii++)
-            data[ii] = index.get(search.get(ii));
-        Counts result = join(data);
-        return result==null ? new Counts():result;
-    }
-
-    public ArrayList<String> parse(String text) {
-        if (text==null || text.isEmpty())
-            return new ArrayList<>();
-
-        List<String> terms = tokenize(text);
-
-        ArrayList<String> unique = new ArrayList<>();
-        HashSet<String> unseen = new HashSet();
-        for (String stem : terms)
-            if (! stop(stem) && unseen.add(stem))
-                unique.add(stem);
-
-        return unique;
-    }
     boolean stop(String word) {
         if (! usestop) return false;
         boolean stop = StopWordHelper.isStopWord(word);
@@ -147,6 +108,7 @@ public class InvertedIndex {
         }
         return stop;
     }
+
     private HashMap<String,Ibox> stopMap = new HashMap<>();
     public HashMap<String,Counts> copyIndex() {
         return new HashMap<>(index);
@@ -154,22 +116,6 @@ public class InvertedIndex {
     public HashMap<String,Ibox> copyStop() {
         return new HashMap<>(stopMap);
     }
-
-    ArrayList<String> tokenize(String doc) {
-        ArrayList<String> words = new ArrayList();
-        try (TokenStream raw = analyzer.tokenStream(null,doc)) {
-            KStemFilter ts = new KStemFilter(raw);
-            CharTermAttribute term = ts.getAttribute(CharTermAttribute.class);
-            ts.reset();
-            while (ts.incrementToken())
-                // fixme - strip and split at non-word chars
-                words.add(term.toString());
-            ts.end();
-        }
-        catch (IOException ex) {}
-        return words;
-    }
-
     public static void main(String[] args) {
         String doc = "don't hello world the quick brown. fox jumped/over the lazy-dog. light lighter warm warmer dark darker";
         ArrayList<String> list = new InvertedIndex().parse(doc);
