@@ -11,7 +11,11 @@ import java.io.File;
 import java.util.*;
 import org.jsoup.Jsoup;
 
-class Main {
+
+// see Convert for directions on downloading Posts.xml
+// this demo reads the posts as xml, indexes them, and does a simple search
+
+public class Main {
     ArrayList<String> docs = new ArrayList<>();
 
     public static void main(String args[]) throws Exception {

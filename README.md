@@ -32,7 +32,7 @@ the jar does not include the example, the demo or the test data
 
 ### quickstart example
 
-see Example.java for a real example ...
+[hello-world](demos/hello-world/src/main/java/demo/Hello.java):
 ```
         InvertedIndex index = new InvertedIndex();
         index.add(0,"the quick brown fox");
@@ -40,11 +40,13 @@ see Example.java for a real example ...
         index.add(2,"jumped over the lazy dog");
         index.add(3,"a battle of wits and possession");
 
-        ArrayList<Integer> batch = index.search("jump");
+        ArrayList<Integer> batch = index.search("jump lazy");
         // --> [2]
 ```
 
-for a demo of processing an xml document, see Main in the demo subdir project
+others:
+- [Example](src/main/java/example/Example.java): read the Posts.txt (2500 rows), index and do an exhaustive search, looped with different options
+- [demo-xml](demos/demo-xml/src/main/java/demo/Main.java): process an xml document, index it and do a simple search
 
 ### license
 the license specified in LICENSE.txt (MIT) applies to all files in this repository except doc/Posts.txt

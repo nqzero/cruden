@@ -1,3 +1,5 @@
 /target
-/demo/target
+/demos/*/target
+/demos/demo-xml/t1
+
 
