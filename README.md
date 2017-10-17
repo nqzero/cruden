@@ -4,21 +4,22 @@ Cruden is a lightweight and easy to use in-memory inverted index for fulltext se
 
 ### features
 
-* Inverted Index (in memory HashMap)
+* inverted index (in memory HashMap)
 * tokenizer (lucene)
 * optional word stemming (lucene KStemmer)
-* optional stop words (english only)
+* optional stop words (english only, bradforj287)
 * optional word occurrence based filtering
 * BaseInverted is a bare-minimum implementation/API to allow prototyping
-* InvertedIndex includes the optional features and statistics for tuning
-* multiple search terms are treated as an intersection, ie they imply the AND operator
+* InvertedIndex includes the optional features and statistics for tuning or production
+* joins: multiple search terms are treated as an intersection, ie they imply the AND operator
 * documents are referred to by an integer key (auto increment if null)
-* writing to the index is not thread safe, but multiple readers may be used
+* writing to the index is not thread safe, but multiple readers may be used concurrently
 * it's fast
  
 ### maven
 
-
+this artifact has not yet been deployed to maven central, so for now you need to install locally
+via `mvn install`
 ```
         <dependency>
 	    <groupId>com.nqzero</groupId>
@@ -45,38 +46,30 @@ see Example.java for a real example ...
 
 for a demo of processing an xml document, see Main in the demo subdir project
 
-### sample text document
-
-doc/Posts.txt
-
-this is based on https://archive.org/download/stackexchange/beer.stackexchange.com.7z
-
-this was generated via the demo project / subdir, in particular Convert
-(first extract the Posts.xml via 7z from the archive)
-
-licensed under CC by-sa/3.0
-per https://archive.org/details/stackexchange
-
-it's used here only as a medium sized sample to run the code against
-
 ### license
-the license specified in LICENSE.txt (MIT) applies to all files in this repository
+the license specified in LICENSE.txt (MIT) applies to all files in this repository except doc/Posts.txt
 
 - this document is copyright 2015 bradforj287, 2017 nqzero
 - stopwords/en.txt is copyright 2015 bradforj287
 - other documents are as indicated, otherwise nqzero 2017
 
+doc/Posts.txt
+- based on https://archive.org/download/stackexchange/beer.stackexchange.com.7z
+- generated via Convert.java in demo
+- licensed under CC by-sa/3.0 per https://archive.org/details/stackexchange
+- it's used here only as a medium sized sample to run the code against and is not included in the jars
 
 ### changes relative to the original
 
-- Cruden was inspired by and initially based upon https://github.com/bradforj287/SimpleTextSearch
+- Cruden was inspired by and initially based upon brad jones' https://github.com/bradforj287/SimpleTextSearch
 - many of the features of the original have been stripped out
 - in particular, the inverted index is from scratch and based on the lucene tokenizer instead of stanford nlp
 
 
 ### about the name
 
-Alexander Cruden singlehandedly created a concordance, ie an annotated inverted index, for the bible in the 1730s,
+[Alexander Cruden singlehandedly created a concordance](https://en.wikipedia.org/wiki/Cruden%27s_Concordance),
+ie an annotated inverted index, for the bible in the 1730s,
 purportedly thinking of little else for the year that he worked on it.
 this seemed like an appropriate name for an in-memory inverted index, and at the time of creation
 no obvious uses of the name in the java ecosystem were found, ie maven central or github
@@ -84,7 +77,7 @@ no obvious uses of the name in the java ecosystem were found, ie maven central o
 ### motivation
 
 the goal is a bare-minimum API to allow prototyping a fiber-based system using [kilim](https://github.com/nqzero/kilim),
-quasar and [db4j](https://github.com/nqzero/db4j). unfortunately, porting lucene to such a system seems difficult,
+quasar and [db4j](https://github.com/db4j/db4j). unfortunately, porting lucene to such a system seems difficult,
 ie lucene doesn't provide an async adapter
 
 
