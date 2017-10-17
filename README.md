@@ -2,7 +2,7 @@
 
 Cruden is a lightweight and easy to use in-memory inverted index for fulltext search for Java
 
-### features:
+### features
 
 * Inverted Index (in memory HashMap)
 * tokenizer (lucene)
@@ -16,7 +16,20 @@ Cruden is a lightweight and easy to use in-memory inverted index for fulltext se
 * writing to the index is not thread safe, but multiple readers may be used
 * it's fast
  
-### Example
+### maven
+
+
+```
+        <dependency>
+	    <groupId>com.nqzero</groupId>
+	    <artifactId>cruden</artifactId>
+	    <version>0.9.0</version>
+        </dependency>
+```
+
+the jar does not include the example, the demo or the test data
+
+### quickstart example
 
 see Example.java for a real example ...
 ```
@@ -30,8 +43,9 @@ see Example.java for a real example ...
         // --> [2]
 ```
 
+for a demo of processing an xml document, see Main in the demo subdir project
 
-### Sample Text Document
+### sample text document
 
 doc/Posts.txt
 
@@ -45,7 +59,7 @@ per https://archive.org/details/stackexchange
 
 it's used here only as a medium sized sample to run the code against
 
-### License
+### license
 the license specified in LICENSE.txt (MIT) applies to all files in this repository
 
 - this document is copyright 2015 bradforj287, 2017 nqzero
@@ -53,21 +67,21 @@ the license specified in LICENSE.txt (MIT) applies to all files in this reposito
 - other documents are as indicated, otherwise nqzero 2017
 
 
-### Changes relative to the original
+### changes relative to the original
 
-Cruden was inspired by and initially based upon https://github.com/bradforj287/SimpleTextSearch
-many of the features of the original have been stripped out.
-in particular, the inverted index is from scratch and based on the lucene tokenizer instead of stanford nlp
+- Cruden was inspired by and initially based upon https://github.com/bradforj287/SimpleTextSearch
+- many of the features of the original have been stripped out
+- in particular, the inverted index is from scratch and based on the lucene tokenizer instead of stanford nlp
 
 
+### about the name
 
-### About the name
-
-Alexander Cruden singlehandedly created a concordance, ie an annotated inverted index, for the bible in the 1730s.
+Alexander Cruden singlehandedly created a concordance, ie an annotated inverted index, for the bible in the 1730s,
+purportedly thinking of little else for the year that he worked on it.
 this seemed like an appropriate name for an in-memory inverted index, and at the time of creation
 no obvious uses of the name in the java ecosystem were found, ie maven central or github
 
-### Motivation
+### motivation
 
 the goal is a bare-minimum API to allow prototyping a fiber-based system using [kilim](https://github.com/nqzero/kilim),
 quasar and [db4j](https://github.com/nqzero/db4j). unfortunately, porting lucene to such a system seems difficult,
