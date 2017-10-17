@@ -1,12 +1,11 @@
+// copyright 2015 bradforj287 - licensed under the terms of the MIT license
+
 package com.nqzero.SimpleTextSearch;
 
 import com.nqzero.cruden.InvertedIndex;
 import java.util.ArrayList;
 import org.junit.Test;
 
-/**
- * Created by brad on 7/12/15.
- */
 public class DocumentParserTest {
 
     @Test

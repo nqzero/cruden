@@ -1,13 +1,11 @@
-package com.nqzero.cruden;
+// copyright 2015 bradforj287 - licensed under the terms of the MIT license
 
+package com.nqzero.cruden;
 
 import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Scanner;
 
-/**
- * Created by brad on 7/12/15.
- */
 public class StopWordHelper {
     //for now only english
     private static HashSet<String> stopwords = getStopWords();

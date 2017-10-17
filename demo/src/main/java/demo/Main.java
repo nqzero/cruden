@@ -1,3 +1,5 @@
+// copyright 2015 bradforj287 - licensed under the terms of the MIT license
+
 package demo;
 
 import com.nqzero.cruden.InvertedIndex;
@@ -9,9 +11,6 @@ import java.io.File;
 import java.util.*;
 import org.jsoup.Jsoup;
 
-/**
- * Created by brad on 6/10/15.
- */
 class Main {
     ArrayList<String> docs = new ArrayList<>();
 

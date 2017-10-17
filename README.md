@@ -1,57 +1,78 @@
-# SimpleTextSearch Overview
-A lightweight and easy to use full text search implementation for Java. For data sets that can fit entirely in memory. Useful for situations where traditional search engines are overkill and overly complicated.
+# Cruden Inverted Index
 
-based on https://github.com/bradforj287/SimpleTextSearch
+Cruden is a lightweight and easy to use in-memory inverted index for fulltext search for Java
 
-###Several assumptions are made in SimpleTextSearch:
-* It is assumed your data can fit in memory. The Index is stored entirely in memory with nothing written to disk
-* The Index itself is immutable. There is no support for automatic re-indexing of documents. Build a new index.
-* Only the english language is supported (as of now) 
-* This is only an Index and there is no sharding support. If you want sharding, you'd have to build it yourself. 
-* Only freeform text searches are supported. No advanced search operators.
+### features:
 
-###Key Features:
-* Inverted Index
-* Word Stemming (snowball stemmer)
-* Stop words
-* String tokenizer (Stanford NLP)
+* Inverted Index (in memory HashMap)
+* tokenizer (lucene)
+* optional word stemming (lucene KStemmer)
+* optional stop words (english only)
+* optional word occurrence based filtering
+* BaseInverted is a bare-minimum implementation/API to allow prototyping
+* InvertedIndex includes the optional features and statistics for tuning
+* multiple search terms are treated as an intersection, ie they imply the AND operator
+* documents are referred to by an integer key (auto increment if null)
+* writing to the index is not thread safe, but multiple readers may be used
+* it's fast
  
 ### Example
 
-see Demo.java for a real example ...
+see Example.java for a real example ...
 ```
-        ArrayList<String> documents = new ArrayList<>();
-        documents.add("the quick brown fox");
-        documents.add("in pursuit of love");
-        documents.add("jumped over the lazy dog");
-        documents.add("a battle of wits and possession");
+        InvertedIndex index = new InvertedIndex();
+        index.add(0,"the quick brown fox");
+        index.add(1,"in pursuit of love");
+        index.add(2,"jumped over the lazy dog");
+        index.add(3,"a battle of wits and possession");
 
-        TextSearchIndex index = new InvertedIndex(documents);
-
-        String searchTerm = "jump";
-
-        ArrayList<Integer> batch = index.search(searchTerm);
+        ArrayList<Integer> batch = index.search("jump");
+        // --> [2]
 ```
 
 
 ### Sample Text Document
 
-test/Posts.txt
+doc/Posts.txt
 
 this is based on https://archive.org/download/stackexchange/beer.stackexchange.com.7z
 
 this was generated via the demo project / subdir, in particular Convert
-(extract the Posts.xml via 7z from the archive)
+(first extract the Posts.xml via 7z from the archive)
 
 licensed under CC by-sa/3.0
 per https://archive.org/details/stackexchange
 
 it's used here only as a medium sized sample to run the code against
 
-# License
-the license specified in LICENSE.txt (MIT) applies to all files in this repository.  
+### License
+the license specified in LICENSE.txt (MIT) applies to all files in this repository
+
+- this document is copyright 2015 bradforj287, 2017 nqzero
+- stopwords/en.txt is copyright 2015 bradforj287
+- other documents are as indicated, otherwise nqzero 2017
 
 
 ### Changes relative to the original
-most of the features of the original have been stripped out.
-all that's left are the preprocessing steps
+
+Cruden was inspired by and initially based upon https://github.com/bradforj287/SimpleTextSearch
+many of the features of the original have been stripped out.
+in particular, the inverted index is from scratch and based on the lucene tokenizer instead of stanford nlp
+
+
+
+### About the name
+
+Alexander Cruden singlehandedly created a concordance, ie an annotated inverted index, for the bible in the 1730s.
+this seemed like an appropriate name for an in-memory inverted index, and at the time of creation
+no obvious uses of the name in the java ecosystem were found, ie maven central or github
+
+### Motivation
+
+the goal is a bare-minimum API to allow prototyping a fiber-based system using [kilim](https://github.com/nqzero/kilim),
+quasar and [db4j](https://github.com/nqzero/db4j). unfortunately, porting lucene to such a system seems difficult,
+ie lucene doesn't provide an async adapter
+
+
+
+

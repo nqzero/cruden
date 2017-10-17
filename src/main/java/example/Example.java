@@ -1,3 +1,5 @@
+// copyright 2017 nqzero - licensed under the terms of the MIT license
+
 package example;
 
 import com.nqzero.cruden.InvertedIndex;

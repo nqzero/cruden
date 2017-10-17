@@ -1,3 +1,5 @@
+// copyright 2015 bradforj287 - licensed under the terms of the MIT license
+
 package com.nqzero.SimpleTextSearch;
 
 import com.nqzero.cruden.InvertedIndex;

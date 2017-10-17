@@ -1,3 +1,5 @@
+// copyright 2017 nqzero - licensed under the terms of the MIT license
+
 package com.nqzero.cruden;
 
 import com.nqzero.cruden.InvertedIndex.Counts;
@@ -17,7 +19,7 @@ public class BaseInverted {
     HashMap<String,Counts> index = new HashMap<>();
     Analyzer analyzer = new StandardAnalyzer();
 
-    public void add(int id,String page) {
+    public void add(Integer id,String page) {
         ArrayList<String> doc = parse(page);
         for (String word : doc) {
             Counts vals = index.get(word);

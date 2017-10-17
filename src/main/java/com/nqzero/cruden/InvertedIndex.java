@@ -1,3 +1,5 @@
+// copyright 2017 nqzero - licensed under the terms of the MIT license
+
 package com.nqzero.cruden;
 
 
@@ -32,7 +34,8 @@ public class InvertedIndex extends BaseInverted {
         return add(this,first,corpus);
     }
 
-    public void add(int id,String page) {
+    public void add(Integer id,String page) {
+        if (id==null) id = numdocs;
         numdocs++;
         int max = (numdocs >> 3) + 200;
         ArrayList<String> doc = parse(page);
