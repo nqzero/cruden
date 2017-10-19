@@ -56,14 +56,15 @@ public class Example {
         time();
         int last = 60, step = last/3;
         for (int jj=0; jj <= last; jj++)
-            loop(jj,jj/step);
+            loop(jj%step,jj/step);
     }
     
     void loop(int kdoc,int scan) {
-        BaseInverted index = add((useBase ? new InvertedIndex():new InvertedIndex()),0,docs);
+        BaseInverted index = add((useBase ? new BaseInverted():new InvertedIndex()),0,docs);
 
         // sprinkle a little salt to try to keep the jit honest
-        index.add(docs.size(),docs.get(kdoc)+" loving the flavour");
+        if (kdoc > 2)
+            index.add(docs.size(),docs.get(kdoc)+" loving the flavour");
 
         String searchTerm = "world";
         int batch = index.search(searchTerm).size();
